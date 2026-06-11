@@ -1,108 +1,111 @@
 # BRAVISI — AI Brand Visibility Intelligence
 
-Bravisi is a premium, presentation-ready SaaS platform that helps B2B and enterprise brands measure, analyze, and optimize their visibility footprint across major Large Language Models (LLMs) and conversational search engines, including ChatGPT, Gemini, Microsoft Copilot, and Anthropic Claude.
+Bravisi is a premium, presentation-ready SaaS platform that helps enterprise and B2B brands analyze and optimize their footprint across Large Language Models (LLMs) and Generative Search Engines (e.g., SearchGPT, Google Gemini, Microsoft Copilot, Anthropic Claude).
 
 ---
 
-## 🚀 Key Features
+## 💡 The Core Use Case: Why Bravisi Matters
 
-### 1. Brand AI Metrics Scan
-*   **AI Visibility Score**: Benchmark your brand's authority footprint from 0 to 100.
-*   **Per-Model Mention Rate**: Detailed percentage-based breakdowns of citation references across ChatGPT, Gemini, Claude, and Copilot.
-*   **Sentiment & Accuracy Analysis**: Track the tone (Positive, Neutral, Negative) and factual alignment of AI-generated brand mentions.
-*   **Visual Trend Analytics**: View month-over-month visibility progression charts built using high-performance Recharts.
-*   **Competitor Benchmarks**: Dynamic comparison dashboards to monitor competitor mention rates, sentiment, and visibility differences.
+Search is undergoing a fundamental shift. Users are moving away from traditional keyword-matching search engines (Google SEO) and toward conversational, synthesis-driven generative answers (Generative Engine Optimization or **GEO**).
 
-### 2. Executive Report (Powered by Gemini 2.5)
-*   **Structured AI Generation**: Interfaces directly with the official Google Gen AI SDK utilizing a strict JSON schema model (`gemini-2.5-flash`).
-*   **Content Gap Analysis**: Clear diagnostic checks on where LLMs lack training corpora to cite your brand.
-*   **Actionable Editorial Backlog**: Detailed list of target articles, keywords, and priority levels needed to overwrite citation gaps.
-*   **LLM Crawler Registry**: Curated list of high-importance developer hubs, directories (G2, ProductHunt, GitHub), and registries heavily crawled by AI engines.
-*   **Technical Optimization Strategy**: Roadmap detailing pillars (like Schema Markup, Entity Association, and Docs Structure) alongside concrete engineering tasks.
-*   **Print & Export Utility**: Executive-ready print stylesheets and copy-to-clipboard actions to share reports instantly.
+When an enterprise buyer asks an AI assistant:
+> *"What is the most secure payment gateway for a global multi-tenant SaaS application?"*
 
----
+The LLM doesn't return a list of links. It returns a **synthesized paragraph recommending 1 or 2 brands**, citing technical specifications, security standards, and developer documentation.
 
-## 🛠️ Tech Stack
+### The AI Recommendation Funnel
+Bravisi diagnoses exactly how LLM crawlers index, perceive, and recommend your brand. It answers critical strategic questions:
+1. **Model Share**: Which LLMs recommend us, and where do we lose citation share?
+2. **Sentiment & Bias**: What is the semantic association of our brand inside LLM vector spaces?
+3. **Source Gaps**: What specific documentation pages, FAQ schemas, or developer registries are missing from the LLM training corpus?
 
-*   **Framework**: Next.js 16+ (App Router, React Server Actions)
-*   **Language**: TypeScript (Strict typing for structured payloads)
-*   **Styling**: Tailwind CSS v4 & custom oklch CSS variables
-*   **SDK**: Official `@google/genai` (Google Gen AI SDK)
-*   **Libraries**:
-    *   `recharts` — Visual data representation
-    *   `framer-motion` — Staggered micro-animations and transitions
-    *   `lucide-react` — SVG icons
-    *   `zod` — Runtime schema validation
+```mermaid
+graph TD
+    A[Brand Website & Docs] -->|1. LLM Ingestion| B[AI Search Crawlers]
+    C[Review Hubs & Github] -->|1. Entity Associations| B
+    B -->|2. Index Ingestion| D[RAG Knowledge Bases]
+    E[User Query on ChatGPT/Gemini] -->|3. Search & Retrieve| D
+    D -->|4. Synthesized Recommendation| F[Cited Brand Result]
+    style F fill:#818cf8,stroke:#a78bfa,stroke-width:2px,color:#fff
+```
 
 ---
 
-## ⚙️ Getting Started
+## 📊 Platform Dashboard & Core Analytics
+
+Bravisi visualizes your LLM footprints and translates unstructured model behaviors into executive-ready dashboards.
+
+### 1. Model Mention Distribution (Bar Chart)
+Measures the volume of brand mentions across the major AI models. High mention volume indicates strong presence in the training set and citation index of that model.
+
+```mermaid
+gantt
+    title AI Model Citations & Focus Areas
+    dateFormat  X
+    axisFormat %
+    section ChatGPT
+    Brand Mentions (45%)           :active, 0, 45
+    section Gemini
+    Brand Mentions (32%)           :active, 0, 32
+    section Copilot
+    Brand Mentions (26%)           :active, 0, 26
+    section Claude
+    Brand Mentions (19%)           :active, 0, 19
+```
+
+### 2. Brand Visibility Progression (Historical Area Chart)
+Track visibility scores (0-100) over time as you apply technical GEO adjustments (e.g. structured data, public developer guides).
+
+```mermaid
+xychart-beta
+    title "6-Month Brand Visibility Score Trend"
+    x-axis [Jan, Feb, Mar, Apr, May, Jun]
+    y-axis "Visibility Score (%)" [0, 20, 40, 60, 80, 100]
+    line [42, 48, 51, 55, 63, 72]
+```
+
+### 3. Executive Diagnosis Matrix
+The generated report segments recommendations into actionable development cards:
+*   🔴 **Critical (Technical SEO / Schema)**: Missing microdata or blocks in `robots.txt` blocking AI user-agents.
+*   🟡 **High (Content Gaps)**: Comparison articles, alternative listings, and feature benchmarks required for conversational synthesis.
+*   🔵 **Medium (Directory Ingestion)**: Registry updates on G2, ProductHunt, npm, or GitHub to feed the training pipeline.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+*   **Frontend Framework**: Next.js 16+ (App Router)
+*   **Language**: TypeScript (Strict typing for report payload safety)
+*   **Styling**: Tailwind CSS v4 & custom oklch glassmorphism variable system
+*   **LLM Processing Backend**: Google Gen AI SDK (`@google/genai` with `gemini-2.5-flash`)
+*   **Data Models**: Zod runtime schema validation
+
+---
+
+## ⚙️ Quick Start
 
 ### 1. Prerequisites
-Ensure you have Node.js 18+ installed on your system.
+Ensure you have Node.js 18+ installed.
 
 ### 2. Installation
-Clone the repository and install the dependencies:
 ```bash
 npm install
 ```
 
-### 3. Environment Configuration
-Create a `.env.local` file in the root of your project:
+### 3. API Key Setup
+Create a `.env.local` file in the root of the project:
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_API_KEY=your_google_studio_api_key_here
 ```
-> ⚠️ **Important**: Never commit your `.env.local` file to source control. It is already added to `.gitignore` to prevent secret leakage.
+*(Note: `.env.local` is ignored in `.gitignore` to protect API keys).*
 
-### 4. Running Locally
-Run the development server:
+### 4. Run Development Server
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-### 5. Production Build
-Verify typings and build the Next.js production bundle:
+### 5. Build and Deploy
 ```bash
 npm run build
 npm start
 ```
-
----
-
-## 📁 Project Structure
-
-```
-src/
-├── actions/
-│   ├── analyze-brand.ts      # Deterministic scanner backend action
-│   └── generate-report.ts    # Gemini Gen AI structured report server action
-├── app/
-│   ├── dashboard/
-│   │   └── page.tsx          # Main dashboard container & tab system
-│   ├── globals.css           # Global typography & design system tokens
-│   ├── layout.tsx            # Global metadata & theme wrapper
-│   └── page.tsx              # Brand landing page
-├── components/
-│   ├── dashboard/
-│   │   ├── professional-report.tsx  # Executive report UI layout
-│   │   ├── score-ring.tsx           # Animated SVG score visualizer
-│   │   ├── overview-cards.tsx       # KPI widgets
-│   │   ├── mention-chart.tsx        # Mention bars (Recharts)
-│   │   ├── trend-chart.tsx          # Trend curves (Recharts)
-│   │   ├── competitor-table.tsx     # Benchmarks grid table
-│   │   └── insights.tsx             # Actionable tabs
-│   └── ui/                          # Shadcn UI primitives
-└── lib/
-    ├── data.ts               # Standard mockup schemas & interfaces
-    ├── mappers.ts            # Data adapters for dashboard props
-    └── schemas.ts            # Zod validation models
-```
-
----
-
-## 🔒 Security & Best Practices
-*   **Strict JSON Outlining**: The Gemini SDK uses the structured `responseSchema` parameters to validate response models before delivery, preventing parsing errors.
-*   **Isolation of Secrets**: All API logic resides on the server using Server Actions; your API key is never exposed to the client-side browser.
-*   **Design Standards**: Fully mobile-responsive layouts, custom dark themes, custom scrollbars, and optimized print layouts.
