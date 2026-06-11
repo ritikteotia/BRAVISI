@@ -35,33 +35,28 @@ graph TD
 
 Bravisi visualizes your LLM footprints and translates unstructured model behaviors into executive-ready dashboards.
 
-### 1. Model Mention Distribution (Bar Chart)
+### 1. Model Mention Distribution
 Measures the volume of brand mentions across the major AI models. High mention volume indicates strong presence in the training set and citation index of that model.
 
-```mermaid
-gantt
-    title AI Model Citations & Focus Areas
-    dateFormat  X
-    axisFormat %
-    section ChatGPT
-    Brand Mentions (45%)           :active, 0, 45
-    section Gemini
-    Brand Mentions (32%)           :active, 0, 32
-    section Copilot
-    Brand Mentions (26%)           :active, 0, 26
-    section Claude
-    Brand Mentions (19%)           :active, 0, 19
-```
+| AI Assistant | Citation Share | Visual Share Indicator |
+| :--- | :---: | :--- |
+| **ChatGPT** | 45.6% | `██████████████████░░░░░░░░░░░░` |
+| **Gemini** | 32.8% | `█████████████░░░░░░░░░░░░░░░░` |
+| **Copilot** | 26.7% | `███████████░░░░░░░░░░░░░░░░░░` |
+| **Claude** | 19.6% | `████████░░░░░░░░░░░░░░░░░░░░` |
 
-### 2. Brand Visibility Progression (Historical Area Chart)
+### 2. Brand Visibility Progression (6-Month Growth Trend)
 Track visibility scores (0-100) over time as you apply technical GEO adjustments (e.g. structured data, public developer guides).
 
 ```mermaid
-xychart-beta
-    title "6-Month Brand Visibility Score Trend"
-    x-axis [Jan, Feb, Mar, Apr, May, Jun]
-    y-axis "Visibility Score (%)" [0, 20, 40, 60, 80, 100]
-    line [42, 48, 51, 55, 63, 72]
+graph LR
+    Jan[Jan: 42%] --> Feb[Feb: 48%]
+    Feb --> Mar[Mar: 51%]
+    Mar --> Apr[Apr: 55%]
+    Apr --> May[May: 63%]
+    May --> Jun[Jun: 72%]
+    
+    style Jun fill:#818cf8,stroke:#a78bfa,stroke-width:2px,color:#fff
 ```
 
 ### 3. Executive Diagnosis Matrix
