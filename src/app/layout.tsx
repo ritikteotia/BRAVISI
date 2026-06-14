@@ -13,16 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BRAVISI — AI Brand Visibility Intelligence",
+  title: "BRAVISI — Enterprise GEO Intelligence Platform",
   description:
-    "Analyze how visible your brand is across AI search systems like ChatGPT, Gemini, and Copilot. Get actionable insights to improve your AI presence.",
+    "The enterprise platform for Generative Engine Optimization. Track AI citations, analyze brand visibility, audit websites, and dominate AI search across ChatGPT, Gemini, Claude, and Copilot.",
   keywords: [
+    "GEO platform",
+    "generative engine optimization",
     "AI visibility",
+    "AI citation tracking",
     "brand monitoring",
     "ChatGPT",
     "Gemini",
-    "AI search",
+    "AI search analytics",
     "brand intelligence",
+    "GEO score",
   ],
 };
 
@@ -35,6 +39,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} dark`}
+      suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
         {children}
