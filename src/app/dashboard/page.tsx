@@ -119,15 +119,15 @@ export default function DashboardOverview() {
   ];
 
   return (
-    <div className="space-y-8 font-sans">
+    <div className="space-y-8 font-sans w-full">
       {/* Header Area */}
       {!isAnalyzing && !showResults && (
         <div className="space-y-1.5">
-          <h1 className="text-xl font-extrabold tracking-tight text-foreground uppercase">
+          <h1 className="text-2xl font-extrabold tracking-tight text-foreground uppercase">
             AI Search Intelligence Console
           </h1>
           <p className="text-xs font-semibold text-muted-foreground">
-            Audit presence, track conversational citations, and map competitor positioning.
+            Audit presence, track conversational citations, and map competitor positioning across global LLM indexes.
           </p>
         </div>
       )}
@@ -137,14 +137,19 @@ export default function DashboardOverview() {
         <motion.div
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-xl"
+          className="w-full"
         >
           <Card className="border-border bg-card shadow-lg">
-            <CardContent className="p-6 space-y-4">
-              <div className="space-y-4">
+            <CardContent className="p-8 space-y-6">
+              <div>
+                <h2 className="text-sm font-extrabold text-foreground uppercase tracking-widest mb-1">Configure Scan Scope</h2>
+                <p className="text-[11px] text-muted-foreground font-semibold">Enter your domain parameters to trigger the multi-model intelligence scan.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Website URL */}
                 <div className="space-y-1.5">
-                  <label htmlFor="dashboard-url" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <label htmlFor="dashboard-url" className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-wider">
                     Website Domain *
                   </label>
                   <div className="relative flex items-center">
@@ -155,14 +160,14 @@ export default function DashboardOverview() {
                       value={websiteUrl}
                       onChange={(e) => setWebsiteUrl(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      className="pl-9 h-9 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+                      className="pl-9 h-10 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
                     />
                   </div>
                 </div>
 
                 {/* Product URL */}
                 <div className="space-y-1.5">
-                  <label htmlFor="dashboard-product-url" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <label htmlFor="dashboard-product-url" className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-wider">
                     Product/Service Landing URL *
                   </label>
                   <div className="relative flex items-center">
@@ -173,14 +178,14 @@ export default function DashboardOverview() {
                       value={productUrl}
                       onChange={(e) => setProductUrl(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      className="pl-9 h-9 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+                      className="pl-9 h-10 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
                     />
                   </div>
                 </div>
 
                 {/* Product Name */}
                 <div className="space-y-1.5">
-                  <label htmlFor="dashboard-brand" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <label htmlFor="dashboard-brand" className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-wider">
                     Product / Brand Name *
                   </label>
                   <div className="relative flex items-center">
@@ -191,14 +196,14 @@ export default function DashboardOverview() {
                       value={brandName}
                       onChange={(e) => setBrandName(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      className="pl-9 h-9 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+                      className="pl-9 h-10 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
                     />
                   </div>
                 </div>
 
                 {/* Competitors */}
                 <div className="space-y-1.5">
-                  <label htmlFor="dashboard-competitors" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <label htmlFor="dashboard-competitors" className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-wider">
                     Compare Against (Optional, comma-separated)
                   </label>
                   <div className="relative flex items-center">
@@ -209,20 +214,22 @@ export default function DashboardOverview() {
                       value={competitors}
                       onChange={(e) => setCompetitors(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      className="pl-9 h-9 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+                      className="pl-9 h-10 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
                     />
                   </div>
                 </div>
               </div>
 
-              <Button
-                onClick={handleAnalyze}
-                disabled={!websiteUrl.trim() || !productUrl.trim() || !brandName.trim() || isAnalyzing}
-                className="w-full h-9 mt-2 rounded bg-primary text-primary-foreground text-xs font-extrabold hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-border shadow-sm"
-              >
-                <Search className="mr-2 h-3.5 w-3.5" />
-                Run Intelligence Audit
-              </Button>
+              <div className="flex justify-end pt-2">
+                <Button
+                  onClick={handleAnalyze}
+                  disabled={!websiteUrl.trim() || !productUrl.trim() || !brandName.trim() || isAnalyzing}
+                  className="w-full md:w-auto px-8 h-10 rounded bg-primary text-primary-foreground text-xs font-extrabold hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-border shadow-sm"
+                >
+                  <Search className="mr-2 h-3.5 w-3.5" />
+                  Run Intelligence Audit
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </motion.div>
@@ -235,12 +242,12 @@ export default function DashboardOverview() {
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col justify-center py-16 text-left max-w-md"
+            className="w-full flex justify-center py-16"
           >
-            <div className="space-y-6 bg-card border border-border p-6 rounded-lg shadow-md">
+            <div className="w-full max-w-xl space-y-6 bg-card border border-border p-8 rounded-lg shadow-md">
               <div className="flex justify-between items-baseline border-b border-border/50 pb-2">
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-foreground">
-                  Auditing brand footprint
+                  Running Deep Search Audit
                 </span>
                 <span className="text-xs font-extrabold font-mono text-foreground">{loadingProgress}%</span>
               </div>
@@ -289,7 +296,7 @@ export default function DashboardOverview() {
 
       {/* Error State */}
       {error && (
-        <div className="max-w-xl">
+        <div className="w-full">
           <Card className="border-risk bg-risk/5">
             <CardContent className="p-5 flex items-start gap-3 text-risk">
               <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
@@ -328,7 +335,7 @@ export default function DashboardOverview() {
                     ID: {globalAnalysisResult.domainName.toUpperCase()}-SECTOR-ALPHA
                   </span>
                 </div>
-                <h1 className="text-xl font-extrabold text-foreground tracking-tight">
+                <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
                   AI Intelligence Audit — {globalAnalysisResult.brandName}
                 </h1>
               </div>

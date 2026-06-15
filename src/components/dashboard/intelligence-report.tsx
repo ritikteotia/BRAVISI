@@ -56,7 +56,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
       model: "ChatGPT (GPT-4o)",
       icon: Brain,
       color: "border-emerald-500/35 text-emerald-400 bg-emerald-500/5",
-      narrative: `ChatGPT primarily perceives ${brandName} through developer docs and recent tech blogs. Its classification is highly structured. ${
+      narrative: `ChatGPT primarily perceives ${brandName} through developer docs and tech blogs. Classification is highly structured. ${
         overallScore >= 70
           ? "It consistently ranks the brand high in technical recommendation lists."
           : "It exhibits a confidence gap regarding enterprise compliance and pricing."
@@ -95,7 +95,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
   ];
 
   return (
-    <div className="space-y-12 font-sans text-xs">
+    <div className="space-y-12 font-sans text-xs w-full">
       
       {/* 1. EXECUTIVE SUMMARY */}
       <section className="space-y-4">
@@ -106,83 +106,83 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
           </h2>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Card 1 */}
-          <div className="bg-card border border-border p-5 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between h-[150px]">
-            <div className="space-y-1">
+          <div className="bg-card border border-border p-6 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between min-h-[160px]">
+            <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
                   AI Presence
                 </span>
-                <span className={`text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded border ${presenceColor}`}>
+                <span className={`text-[9px] font-extrabold uppercase px-2 py-0.5 rounded border ${presenceColor}`}>
                   {presenceLevel}
                 </span>
               </div>
-              <p className="text-[11px] font-semibold text-muted-foreground leading-relaxed mt-2">
+              <p className="text-xs font-bold text-muted-foreground leading-relaxed mt-1">
                 {presenceDesc}
               </p>
             </div>
-            <div className="flex items-baseline gap-1 pt-2 border-t border-border/40">
-              <span className="text-2xl font-extrabold tracking-tight text-foreground">{overallScore}</span>
+            <div className="flex items-baseline gap-1 pt-3 border-t border-border/40">
+              <span className="text-3xl font-extrabold tracking-tight text-foreground">{overallScore}</span>
               <span className="text-[10px] font-bold text-muted-foreground">/ 100 score</span>
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="bg-card border border-border p-5 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between h-[150px]">
-            <div className="space-y-1">
+          <div className="bg-card border border-border p-6 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between min-h-[160px]">
+            <div className="space-y-1.5">
               <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
                 Perceived Positioning
               </span>
               <h3 className="text-xs font-extrabold text-foreground truncate mt-1">
                 {primaryPositioning.split(",")[0] || primaryPositioning}
               </h3>
-              <p className="text-[11px] font-semibold text-muted-foreground leading-relaxed">
+              <p className="text-xs font-bold text-muted-foreground leading-relaxed">
                 {primaryPositioning}
               </p>
             </div>
-            <div className="pt-2 border-t border-border/40 text-[10px] font-bold text-muted-foreground">
+            <div className="pt-3 border-t border-border/40 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
               Market Sector Identity
             </div>
           </div>
 
           {/* Card 3 */}
-          <div className="bg-card border border-border p-5 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between h-[150px]">
-            <div className="space-y-1">
+          <div className="bg-card border border-border p-6 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between min-h-[160px]">
+            <div className="space-y-1.5">
               <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
                 Citation Probability
               </span>
-              <p className="text-[11px] font-semibold text-muted-foreground leading-relaxed mt-2">
+              <p className="text-xs font-bold text-muted-foreground leading-relaxed mt-1">
                 {recommendationRate}
               </p>
             </div>
-            <div className="flex items-baseline gap-1 pt-2 border-t border-border/40">
-              <span className="text-2xl font-extrabold tracking-tight text-foreground">{overallScore}%</span>
-              <span className="text-[10px] font-bold text-muted-foreground">matching</span>
+            <div className="flex items-baseline gap-1 pt-3 border-t border-border/40">
+              <span className="text-3xl font-extrabold tracking-tight text-foreground">{overallScore}%</span>
+              <span className="text-[10px] font-bold text-muted-foreground">matching rate</span>
             </div>
           </div>
 
           {/* Card 4 */}
-          <div className="bg-card border border-border p-5 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between h-[150px]">
-            <div className="space-y-1">
+          <div className="bg-card border border-border p-6 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between min-h-[160px]">
+            <div className="space-y-1.5">
               <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
                 Top Opportunity
               </span>
               <h3 className="text-xs font-extrabold text-foreground truncate mt-1">
                 {biggestOpportunity}
               </h3>
-              <p className="text-[11px] font-semibold text-muted-foreground leading-relaxed">
-                Correct this priority to see the quickest gains in citation share.
+              <p className="text-xs font-bold text-muted-foreground leading-relaxed">
+                Address this technical issue to maximize recommendation velocity.
               </p>
             </div>
-            <div className="pt-2 border-t border-border/40 text-[9px] font-mono font-extrabold text-opportunity uppercase tracking-wider flex items-center gap-1">
-              <CheckCircle className="h-3 w-3" /> Quickest Win
+            <div className="pt-3 border-t border-border/40 text-[9px] font-mono font-extrabold text-opportunity uppercase tracking-wider flex items-center gap-1">
+              <CheckCircle className="h-3.5 w-3.5" /> High Impact Win
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. AI PERCEPTION */}
+      {/* 2. AI PERCEPTION - STRETCHED HORIZONTALLY */}
       <section className="space-y-4">
         <div className="flex items-center gap-2 border-b border-border pb-2">
           <span className="text-[10px] font-extrabold font-mono text-muted-foreground/60">02 /</span>
@@ -191,33 +191,38 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
           </h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-4">
           {modelNarratives.map((item) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.model}
-                className="bg-card border border-border rounded-lg p-5 flex flex-col justify-between gap-4 transition-all hover:border-foreground/25"
+                className="bg-card border border-border rounded-lg p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-8 transition-all hover:border-foreground/25 w-full"
               >
-                <div className="flex items-center gap-3">
-                  <div className={`flex h-8 w-8 items-center justify-center rounded border ${item.color}`}>
-                    <Icon className="h-4 w-4" />
+                {/* Model Badge */}
+                <div className="flex items-center gap-3 w-64 shrink-0">
+                  <div className={`flex h-9 w-9 items-center justify-center rounded border ${item.color}`}>
+                    <Icon className="h-4.5 w-4.5" />
                   </div>
                   <div>
                     <h3 className="text-xs font-extrabold text-foreground">{item.model}</h3>
-                    <span className="text-[9px] font-extrabold text-muted-foreground uppercase tracking-wider">conversational analysis</span>
+                    <span className="text-[9px] font-extrabold text-muted-foreground/60 uppercase tracking-widest">Conversational Index</span>
                   </div>
                 </div>
-                <p className="text-xs font-semibold text-muted-foreground leading-relaxed">
-                  {item.narrative}
-                </p>
+                
+                {/* Stretched Narrative Text */}
+                <div className="flex-1 md:pl-6 md:border-l border-border/40">
+                  <p className="text-xs font-semibold text-muted-foreground leading-relaxed">
+                    {item.narrative}
+                  </p>
+                </div>
               </div>
             );
           })}
         </div>
       </section>
 
-      {/* 3. COMPETITOR LANDSCAPE MATRIX */}
+      {/* 3. COMPETITOR LANDSCAPE MATRIX - WIDE SCREEN HORIZONTAL LAYOUT */}
       <section className="space-y-4">
         <div className="flex items-center gap-2 border-b border-border pb-2">
           <span className="text-[10px] font-extrabold font-mono text-muted-foreground/60">03 /</span>
@@ -226,87 +231,117 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
           </h2>
         </div>
 
-        {/* 2D Positioning Matrix */}
-        <div className="border border-border p-6 bg-card rounded-lg space-y-4">
-          <div className="flex items-center justify-between">
+        <div className="border border-border p-6 bg-card rounded-lg flex flex-col lg:flex-row gap-8 w-full">
+          {/* Matrix Plot (Takes 2/3 of space on desktop) */}
+          <div className="flex-1 space-y-4">
             <div>
               <h3 className="text-xs font-extrabold text-foreground uppercase">Strategic Positioning Matrix</h3>
-              <p className="text-[10px] font-semibold text-muted-foreground mt-0.5">Brand presence versus model recommendation likelihood.</p>
+              <p className="text-[10px] font-semibold text-muted-foreground mt-0.5">Plotting brand presence versus recommendation strength across models.</p>
             </div>
-            <span className="text-[9px] font-mono font-extrabold border border-border px-2 py-0.5 rounded bg-accent/30 text-foreground">
-              SPATIAL GRID
-            </span>
+
+            <div className="relative h-80 border-l-2 border-b-2 border-border/80 bg-accent/5 flex flex-col justify-between p-4 rounded-bl overflow-hidden">
+              {/* Background Grid Lines */}
+              <div className="absolute inset-0 grid grid-cols-5 grid-rows-5 pointer-events-none opacity-40">
+                <div className="border-r border-dashed border-border/30 h-full w-full" />
+                <div className="border-r border-dashed border-border/30 h-full w-full" />
+                <div className="border-r border-dashed border-border/30 h-full w-full" />
+                <div className="border-r border-dashed border-border/30 h-full w-full" />
+                <div className="border-b border-dashed border-border/30 h-full w-full" />
+                <div className="border-b border-dashed border-border/30 h-full w-full" />
+                <div className="border-b border-dashed border-border/30 h-full w-full" />
+                <div className="border-b border-dashed border-border/30 h-full w-full" />
+              </div>
+
+              {/* Quadrant Titles */}
+              <div className="absolute top-3 right-3 text-muted-foreground/50 font-mono font-extrabold text-[9px] uppercase tracking-wider">
+                Quadrant I: Leader / High Citation
+              </div>
+              <div className="absolute bottom-3 left-3 text-muted-foreground/50 font-mono font-extrabold text-[9px] uppercase tracking-wider">
+                Quadrant III: Niche / Emerging
+              </div>
+
+              {/* Axis Titles */}
+              <div className="absolute top-1/2 left-3 transform -translate-y-1/2 -rotate-90 origin-left text-muted-foreground/40 font-mono font-extrabold text-[8px] uppercase tracking-widest pointer-events-none">
+                ← Brand Presence Index →
+              </div>
+
+              {/* Matrix Items */}
+              {competitorScores.map((c) => {
+                const xPos = Math.max(15, Math.min(85, c.score));
+                const yPos = Math.max(15, Math.min(85, Math.round(c.score * 0.9)));
+                const isMain = c.name === brandName;
+
+                return (
+                  <motion.div
+                    key={c.name}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute"
+                    style={{
+                      left: `${xPos}%`,
+                      bottom: `${yPos}%`,
+                      transform: "translate(-50%, 50%)",
+                    }}
+                  >
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border shadow-md whitespace-nowrap transition-all hover:scale-105 ${
+                      isMain ? "bg-primary border-primary text-primary-foreground font-extrabold" : "bg-card border-border text-foreground font-bold"
+                    }`}>
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full shrink-0 ${
+                          isMain ? "bg-opportunity animate-pulse" : "bg-recommendation"
+                        }`}
+                      />
+                      <span className="text-[10px]">
+                        {c.name} {isMain && "(You)"}
+                      </span>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            <div className="flex justify-between font-mono text-[9px] font-bold text-muted-foreground/60 px-1 pt-1">
+              <span>← UNDERREPRESENTED IN TRAINING DATA</span>
+              <span>HIGH RECOMMENDATION PROBABILITY →</span>
+            </div>
           </div>
 
-          <div className="relative h-64 border-l-2 border-b-2 border-border/80 bg-accent/5 flex flex-col justify-between p-4 rounded-bl overflow-hidden">
-            {/* Background Grid Lines */}
-            <div className="absolute inset-0 grid grid-cols-4 grid-rows-4 pointer-events-none opacity-40">
-              <div className="border-r border-dashed border-border/30 h-full w-full" />
-              <div className="border-r border-dashed border-border/30 h-full w-full" />
-              <div className="border-r border-dashed border-border/30 h-full w-full" />
-              <div className="border-b border-dashed border-border/30 h-full w-full" />
-              <div className="border-b border-dashed border-border/30 h-full w-full" />
-              <div className="border-b border-dashed border-border/30 h-full w-full" />
+          {/* Matrix Takeaways (Takes 1/3 of space on desktop, styled horizontally on mobile) */}
+          <div className="w-full lg:w-80 border-t lg:border-t-0 lg:border-l border-border lg:pl-6 pt-6 lg:pt-0 space-y-4 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-[10px] font-extrabold text-foreground uppercase tracking-widest">Landscape Findings</h4>
+                <p className="text-[10px] font-bold text-muted-foreground">Strategic notes on comparative positioning.</p>
+              </div>
+
+              <div className="space-y-3">
+                <div className="p-3 bg-accent/20 border border-border rounded">
+                  <p className="font-extrabold text-[10px] text-foreground">1. Market Presence</p>
+                  <p className="text-muted-foreground text-[10px] font-semibold mt-1">
+                    {sentiment === "Positive"
+                      ? `${brandName} enjoys a leading presence score, outperforming peers in index weight.`
+                      : `${brandName} is mapped as a niche provider. Enhancing crawls is priority #1.`}
+                  </p>
+                </div>
+
+                <div className="p-3 bg-accent/20 border border-border rounded">
+                  <p className="font-extrabold text-[10px] text-foreground">2. Competitive Positioning</p>
+                  <p className="text-muted-foreground text-[10px] font-semibold mt-1">
+                    Comparing competitor gaps is vital. Review missing structured data schema list in the "Website Audit" section.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/* Quadrant Titles */}
-            <div className="absolute top-3 right-3 text-muted-foreground/50 font-mono font-extrabold text-[9px] uppercase tracking-wider">
-              Quadrant I: Leader / High Citation
+            <div className="text-[9px] font-mono font-bold text-muted-foreground">
+              SCAN COMPLETED AT: {new Date().toLocaleDateString()}
             </div>
-            <div className="absolute bottom-3 left-3 text-muted-foreground/50 font-mono font-extrabold text-[9px] uppercase tracking-wider">
-              Quadrant III: Niche / Emerging
-            </div>
-
-            {/* Axis Titles */}
-            <div className="absolute top-1/2 left-3 transform -translate-y-1/2 -rotate-90 origin-left text-muted-foreground/40 font-mono font-extrabold text-[8px] uppercase tracking-widest pointer-events-none">
-              ← Brand Presence Index →
-            </div>
-
-            {/* Matrix Items */}
-            {competitorScores.map((c) => {
-              // Map overall score directly to coordinates
-              const xPos = Math.max(15, Math.min(85, c.score));
-              const yPos = Math.max(15, Math.min(85, Math.round(c.score * 0.9)));
-              const isMain = c.name === brandName;
-
-              return (
-                <motion.div
-                  key={c.name}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute"
-                  style={{
-                    left: `${xPos}%`,
-                    bottom: `${yPos}%`,
-                    transform: "translate(-50%, 50%)",
-                  }}
-                >
-                  <div className={`flex items-center gap-2 px-2.5 py-1 rounded-full border shadow-md whitespace-nowrap transition-all hover:scale-105 ${
-                    isMain ? "bg-primary border-primary text-primary-foreground font-extrabold" : "bg-card border-border text-foreground font-bold"
-                  }`}>
-                    <span
-                      className={`h-2 w-2 rounded-full shrink-0 ${
-                        isMain ? "bg-opportunity animate-pulse" : "bg-recommendation"
-                      }`}
-                    />
-                    <span className="text-[10px]">
-                      {c.name} {isMain && "(You)"}
-                    </span>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          <div className="flex justify-between font-mono text-[9px] font-bold text-muted-foreground/60 px-1 pt-1">
-            <span>← UNDERREPRESENTED IN CORPORA</span>
-            <span>RECOMMENDED FREQUENTLY →</span>
           </div>
         </div>
       </section>
 
-      {/* 4. STRATEGIC RECOMMENDATIONS */}
+      {/* 4. STRATEGIC RECOMMENDATIONS - FULL WIDTH ROW BLOCK */}
       <section className="space-y-4">
         <div className="flex items-center gap-2 border-b border-border pb-2">
           <span className="text-[10px] font-extrabold font-mono text-muted-foreground/60">04 /</span>
@@ -315,11 +350,11 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
           </h2>
         </div>
 
-        <div className="border border-border rounded-lg overflow-hidden bg-card">
+        <div className="border border-border rounded-lg overflow-hidden bg-card shadow-sm w-full">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-border bg-accent/25 font-bold text-muted-foreground text-[10px] uppercase tracking-wider">
-                <th className="p-4 w-28">Severity</th>
+                <th className="p-4 w-32">Severity</th>
                 <th className="p-4">Required Action Plan</th>
               </tr>
             </thead>
