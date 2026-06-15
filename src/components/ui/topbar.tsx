@@ -8,7 +8,9 @@ import {
   Moon,
   ChevronRight,
   Menu,
+  Target,
 } from "lucide-react";
+import { useBrand } from "@/context/BrandContext";
 import { useState, useEffect } from "react";
 
 const routeLabels: Record<string, string> = {
@@ -30,6 +32,8 @@ interface TopbarProps {
 
 export default function Topbar({ onMobileMenuToggle, sidebarCollapsed }: TopbarProps) {
   const pathname = usePathname();
+  const { brandName, analysisResult, isAnalyzed, clearBrandData } = useBrand();
+  const overallScore = analysisResult?.overallScore || 0;
   const [isDark, setIsDark] = useState(true);
 
   // Get breadcrumb path segments
@@ -94,6 +98,25 @@ export default function Topbar({ onMobileMenuToggle, sidebarCollapsed }: TopbarP
           {breadcrumbs[breadcrumbs.length - 1]?.label || "Dashboard"}
         </span>
       </div>
+
+      {/* Center: Active Brand status */}
+      {isAnalyzed && (
+        <div className="hidden md:flex items-center gap-3 bg-accent/30 border border-border px-3.5 py-1 rounded-full text-[10px] font-bold shadow-sm transition-all hover:bg-accent/50">
+          <span className="text-muted-foreground uppercase tracking-wider">Scanned:</span>
+          <span className="text-foreground">{brandName}</span>
+          <span className="h-3.5 w-[1px] bg-border" />
+          <span className="text-opportunity uppercase tracking-wider flex items-center gap-1">
+            <Target className="h-3.5 w-3.5 text-opportunity" /> {overallScore} Score
+          </span>
+          <span className="h-3.5 w-[1px] bg-border" />
+          <button
+            onClick={clearBrandData}
+            className="text-risk hover:underline cursor-pointer uppercase tracking-wider text-[9px] font-bold"
+          >
+            Reset
+          </button>
+        </div>
+      )}
 
       {/* Right: Actions */}
       <div className="flex items-center gap-2">

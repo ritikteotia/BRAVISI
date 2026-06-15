@@ -56,6 +56,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
       model: "ChatGPT (GPT-4o)",
       icon: Brain,
       color: "border-emerald-500/35 text-emerald-400 bg-emerald-500/5",
+      hoverStyle: "hover:border-emerald-500/40 hover:bg-emerald-500/5",
       narrative: `ChatGPT primarily perceives ${brandName} through developer docs and tech blogs. Classification is highly structured. ${
         overallScore >= 70
           ? "It consistently ranks the brand high in technical recommendation lists."
@@ -66,6 +67,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
       model: "Gemini 2.5",
       icon: Sparkles,
       color: "border-blue-500/35 text-blue-400 bg-blue-500/5",
+      hoverStyle: "hover:border-blue-500/40 hover:bg-blue-500/5",
       narrative: `Gemini draws heavily from Wikidata and structured enterprise entity grids. ${
         overallScore >= 60
           ? "It maps the brand correctly to its primary category with strong semantic weight."
@@ -76,6 +78,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
       model: "Claude 3.5 Sonnet",
       icon: Compass,
       color: "border-amber-500/35 text-amber-400 bg-amber-500/5",
+      hoverStyle: "hover:border-amber-500/40 hover:bg-amber-500/5",
       narrative: `Claude focuses on conceptual completeness. ${
         overallScore >= 75
           ? "It provides detailed technical answers praising the brand's modular design."
@@ -86,6 +89,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
       model: "Microsoft Copilot",
       icon: Target,
       color: "border-indigo-500/35 text-indigo-400 bg-indigo-500/5",
+      hoverStyle: "hover:border-indigo-500/40 hover:bg-indigo-500/5",
       narrative: `Copilot pulls from live Bing indexes. ${
         overallScore >= 50
           ? "It cites current feature pricing and blog posts reliably."
@@ -108,7 +112,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Card 1 */}
-          <div className="bg-card border border-border p-6 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between min-h-[160px]">
+          <div className="bg-card shadow-3d-premium card-3d-lift border-t-3 border-t-indigo-500 p-6 rounded-lg flex flex-col justify-between min-h-[160px]">
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
@@ -123,13 +127,13 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
               </p>
             </div>
             <div className="flex items-baseline gap-1 pt-3 border-t border-border/40">
-              <span className="text-3xl font-extrabold tracking-tight text-foreground">{overallScore}</span>
+              <span className="text-3xl font-extrabold tracking-tight text-foreground bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">{overallScore}</span>
               <span className="text-[10px] font-bold text-muted-foreground">/ 100 score</span>
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="bg-card border border-border p-6 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between min-h-[160px]">
+          <div className="bg-card shadow-3d-premium card-3d-lift border-t-3 border-t-purple-500 p-6 rounded-lg flex flex-col justify-between min-h-[160px]">
             <div className="space-y-1.5">
               <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
                 Perceived Positioning
@@ -147,7 +151,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
           </div>
 
           {/* Card 3 */}
-          <div className="bg-card border border-border p-6 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between min-h-[160px]">
+          <div className="bg-card shadow-3d-premium card-3d-lift border-t-3 border-t-pink-500 p-6 rounded-lg flex flex-col justify-between min-h-[160px]">
             <div className="space-y-1.5">
               <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
                 Citation Probability
@@ -157,13 +161,13 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
               </p>
             </div>
             <div className="flex items-baseline gap-1 pt-3 border-t border-border/40">
-              <span className="text-3xl font-extrabold tracking-tight text-foreground">{overallScore}%</span>
+              <span className="text-3xl font-extrabold tracking-tight text-foreground bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">{overallScore}%</span>
               <span className="text-[10px] font-bold text-muted-foreground">matching rate</span>
             </div>
           </div>
 
           {/* Card 4 */}
-          <div className="bg-card border border-border p-6 rounded-lg transition-all hover:border-foreground/20 shadow-sm flex flex-col justify-between min-h-[160px]">
+          <div className="bg-card shadow-3d-premium card-3d-lift border-t-3 border-t-emerald-500 p-6 rounded-lg flex flex-col justify-between min-h-[160px]">
             <div className="space-y-1.5">
               <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
                 Top Opportunity
@@ -182,7 +186,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
         </div>
       </section>
 
-      {/* 2. AI PERCEPTION - STRETCHED HORIZONTALLY */}
+      {/* 2. AI PERCEPTION - ROW WITH INTERACTIVE GRADIENT HOVERS */}
       <section className="space-y-4">
         <div className="flex items-center gap-2 border-b border-border pb-2">
           <span className="text-[10px] font-extrabold font-mono text-muted-foreground/60">02 /</span>
@@ -195,13 +199,14 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
           {modelNarratives.map((item) => {
             const Icon = item.icon;
             return (
-              <div
+              <motion.div
                 key={item.model}
-                className="bg-card border border-border rounded-lg p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-8 transition-all hover:border-foreground/25 w-full"
+                whileHover={{ scale: 1.005, y: -1 }}
+                className={`bg-card border border-border rounded-lg p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-8 transition-all w-full shadow-sm ${item.hoverStyle}`}
               >
                 {/* Model Badge */}
                 <div className="flex items-center gap-3 w-64 shrink-0">
-                  <div className={`flex h-9 w-9 items-center justify-center rounded border ${item.color}`}>
+                  <div className={`flex h-9 w-9 items-center justify-center rounded border ${item.color} shadow-sm`}>
                     <Icon className="h-4.5 w-4.5" />
                   </div>
                   <div>
@@ -216,13 +221,13 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
                     {item.narrative}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
       </section>
 
-      {/* 3. COMPETITOR LANDSCAPE MATRIX - WIDE SCREEN HORIZONTAL LAYOUT */}
+      {/* 3. COMPETITOR LANDSCAPE MATRIX - WIDE SCREEN 3D SPATIAL MAP */}
       <section className="space-y-4">
         <div className="flex items-center gap-2 border-b border-border pb-2">
           <span className="text-[10px] font-extrabold font-mono text-muted-foreground/60">03 /</span>
@@ -231,17 +236,22 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
           </h2>
         </div>
 
-        <div className="border border-border p-6 bg-card rounded-lg flex flex-col lg:flex-row gap-8 w-full">
+        <div className="border border-border p-6 bg-card rounded-lg flex flex-col lg:flex-row gap-8 w-full shadow-3d-premium">
           {/* Matrix Plot (Takes 2/3 of space on desktop) */}
           <div className="flex-1 space-y-4">
-            <div>
-              <h3 className="text-xs font-extrabold text-foreground uppercase">Strategic Positioning Matrix</h3>
-              <p className="text-[10px] font-semibold text-muted-foreground mt-0.5">Plotting brand presence versus recommendation strength across models.</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-xs font-extrabold text-foreground uppercase">Strategic Positioning Matrix</h3>
+                <p className="text-[10px] font-semibold text-muted-foreground mt-0.5">Plotting brand presence versus recommendation strength across models.</p>
+              </div>
+              <span className="text-[9px] font-mono font-extrabold border border-border px-2 py-0.5 rounded bg-accent/30 text-foreground">
+                3D SPATIAL GRID
+              </span>
             </div>
 
-            <div className="relative h-80 border-l-2 border-b-2 border-border/80 bg-accent/5 flex flex-col justify-between p-4 rounded-bl overflow-hidden">
+            <div className="relative h-80 border-l-2 border-b-2 border-border/80 bg-accent/5 flex flex-col justify-between p-4 rounded-bl overflow-hidden shadow-[inset_0_4px_16px_rgba(0,0,0,0.03)]">
               {/* Background Grid Lines */}
-              <div className="absolute inset-0 grid grid-cols-5 grid-rows-5 pointer-events-none opacity-40">
+              <div className="absolute inset-0 grid grid-cols-5 grid-rows-5 pointer-events-none opacity-45">
                 <div className="border-r border-dashed border-border/30 h-full w-full" />
                 <div className="border-r border-dashed border-border/30 h-full w-full" />
                 <div className="border-r border-dashed border-border/30 h-full w-full" />
@@ -276,7 +286,8 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
                     key={c.name}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
+                    whileHover={{ scale: 1.1, zIndex: 10 }}
+                    transition={{ duration: 0.3 }}
                     className="absolute"
                     style={{
                       left: `${xPos}%`,
@@ -284,8 +295,10 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
                       transform: "translate(-50%, 50%)",
                     }}
                   >
-                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border shadow-md whitespace-nowrap transition-all hover:scale-105 ${
-                      isMain ? "bg-primary border-primary text-primary-foreground font-extrabold" : "bg-card border-border text-foreground font-bold"
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border shadow-3d-premium whitespace-nowrap cursor-pointer transition-all ${
+                      isMain 
+                        ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-extrabold border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.4)]" 
+                        : "bg-card border-border text-foreground font-bold hover:border-foreground/30"
                     }`}>
                       <span
                         className={`h-2.5 w-2.5 rounded-full shrink-0 ${
@@ -307,7 +320,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
             </div>
           </div>
 
-          {/* Matrix Takeaways (Takes 1/3 of space on desktop, styled horizontally on mobile) */}
+          {/* Matrix Takeaways (Takes 1/3 of space on desktop) */}
           <div className="w-full lg:w-80 border-t lg:border-t-0 lg:border-l border-border lg:pl-6 pt-6 lg:pt-0 space-y-4 flex flex-col justify-between">
             <div className="space-y-4">
               <div>
@@ -316,7 +329,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
               </div>
 
               <div className="space-y-3">
-                <div className="p-3 bg-accent/20 border border-border rounded">
+                <div className="p-3 bg-accent/20 border border-border/80 rounded shadow-sm">
                   <p className="font-extrabold text-[10px] text-foreground">1. Market Presence</p>
                   <p className="text-muted-foreground text-[10px] font-semibold mt-1">
                     {sentiment === "Positive"
@@ -325,7 +338,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
                   </p>
                 </div>
 
-                <div className="p-3 bg-accent/20 border border-border rounded">
+                <div className="p-3 bg-accent/20 border border-border/80 rounded shadow-sm">
                   <p className="font-extrabold text-[10px] text-foreground">2. Competitive Positioning</p>
                   <p className="text-muted-foreground text-[10px] font-semibold mt-1">
                     Comparing competitor gaps is vital. Review missing structured data schema list in the "Website Audit" section.
@@ -350,7 +363,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
           </h2>
         </div>
 
-        <div className="border border-border rounded-lg overflow-hidden bg-card shadow-sm w-full">
+        <div className="border border-border rounded-lg overflow-hidden bg-card shadow-3d-premium w-full">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-border bg-accent/25 font-bold text-muted-foreground text-[10px] uppercase tracking-wider">
@@ -360,14 +373,14 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
             </thead>
             <tbody>
               {recommendedActions.map((action, i) => {
-                let colorClass = "text-risk bg-risk/5 border-risk/20";
-                if (action.type === "warning") colorClass = "text-warning bg-warning/5 border-warning/20";
-                if (action.type === "info") colorClass = "text-recommendation bg-recommendation/5 border-recommendation/20";
+                let colorClass = "text-risk bg-risk/5 border-risk/20 shadow-[0_2px_8px_rgba(239,68,68,0.1)]";
+                if (action.type === "warning") colorClass = "text-warning bg-warning/5 border-warning/20 shadow-[0_2px_8px_rgba(245,158,11,0.1)]";
+                if (action.type === "info") colorClass = "text-recommendation bg-recommendation/5 border-recommendation/20 shadow-[0_2px_8px_rgba(59,130,246,0.1)]";
 
                 return (
                   <tr key={i} className="border-b border-border last:border-none transition-colors hover:bg-accent/5">
                     <td className="p-4 align-top">
-                      <span className={`text-[9px] font-mono font-extrabold uppercase tracking-wider border px-2 py-0.5 rounded ${colorClass}`}>
+                      <span className={`text-[9px] font-mono font-extrabold uppercase tracking-wider border px-2.5 py-1 rounded shadow-sm ${colorClass}`}>
                         {action.type}
                       </span>
                     </td>

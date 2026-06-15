@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useBrand } from "@/context/BrandContext";
 import Link from "next/link";
+import BrandScanner from "@/components/dashboard/brand-scanner";
 
 interface CitationResult {
   model: string;
@@ -115,21 +116,17 @@ export default function CitationsPage() {
 
   if (!isAnalyzed) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 max-w-md mx-auto">
-        <div className="h-12 w-12 rounded-full border border-border flex items-center justify-center bg-card">
-          <Sparkles className="h-5 w-5 text-muted-foreground animate-pulse" />
+      <div className="space-y-6">
+        <div className="flex items-center justify-between border-b border-border pb-4">
+          <div className="space-y-1">
+            <h1 className="text-xl font-extrabold tracking-tight text-foreground uppercase">AI Citation Tracking</h1>
+            <p className="text-xs font-semibold text-muted-foreground">Track brand mentions across ChatGPT, Gemini, Claude, and Copilot in real-time.</p>
+          </div>
         </div>
-        <div className="space-y-1">
-          <h3 className="text-sm font-extrabold text-foreground uppercase">Brand Analysis Required</h3>
-          <p className="text-xs font-semibold text-muted-foreground leading-relaxed">
-            Please run a brand visibility audit on the dashboard before accessing this section.
-          </p>
-        </div>
-        <Link href="/dashboard">
-          <Button className="h-9 px-4 text-xs font-bold border border-border bg-card text-foreground hover:bg-accent">
-            Go to Dashboard
-          </Button>
-        </Link>
+        <BrandScanner 
+          title="Track AI Citations" 
+          description="Enter your product details to retrieve active conversational mentions and citation statistics." 
+        />
       </div>
     );
   }

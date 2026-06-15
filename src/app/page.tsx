@@ -2,10 +2,28 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Search, Target, Shield, FileText, Sparkles, MessageSquare, AlertCircle, CheckCircle } from "lucide-react";
+import { ArrowRight, Search, Target, Shield, FileText, Sparkles, MessageSquare, AlertCircle, CheckCircle, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 
 export default function LandingPage() {
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
+  const toggleTheme = () => {
+    const html = document.documentElement;
+    if (html.classList.contains("dark")) {
+      html.classList.remove("dark");
+      setIsDark(false);
+    } else {
+      html.classList.add("dark");
+      setIsDark(true);
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -31,7 +49,16 @@ export default function LandingPage() {
               BRAVISI
             </span>
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="flex h-8 w-8 items-center justify-center rounded border border-border bg-background text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
+              aria-label="Toggle Theme"
+            >
+              {isDark ? <Sun className="h-4 w-4 text-foreground" /> : <Moon className="h-4 w-4 text-foreground" />}
+            </button>
+
             <Link href="/dashboard">
               <Button
                 variant="outline"
@@ -88,7 +115,7 @@ export default function LandingPage() {
               <Link href="/dashboard">
                 <Button
                   size="lg"
-                  className="h-10 rounded px-6 bg-primary text-primary-foreground text-xs font-extrabold hover:opacity-90 transition-opacity border border-border group"
+                  className="h-10 rounded px-6 bg-primary text-primary-foreground text-xs font-extrabold transition-opacity border border-border group glow-button"
                 >
                   Scan Your Product Now
                   <ArrowRight className="ml-2 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -100,8 +127,10 @@ export default function LandingPage() {
           {/* Right Block: Elegant Mock AI Graphic */}
           <motion.div 
             variants={itemVariants} 
-            className="lg:col-span-5 bg-card border border-border p-6 rounded-xl shadow-xl space-y-4 relative overflow-hidden"
+            className="lg:col-span-5 bg-card border border-border p-6 rounded-xl shadow-3d-premium card-3d-lift space-y-4 relative overflow-hidden"
           >
+            {/* Vibrant gradient border top line */}
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-vibrant" />
             {/* Window bar */}
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div className="flex items-center gap-1.5">
@@ -165,7 +194,7 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
             {/* Block 1 */}
-            <div className="bg-card border border-border p-6 rounded-lg space-y-3 transition-all hover:border-foreground/25">
+            <div className="bg-card border border-border p-6 rounded-lg space-y-3 glow-card card-3d-lift">
               <div className="flex h-9 w-9 items-center justify-center rounded border border-border bg-accent/20">
                 <Search className="h-4.5 w-4.5 text-foreground" />
               </div>
@@ -178,7 +207,7 @@ export default function LandingPage() {
             </div>
 
             {/* Block 2 */}
-            <div className="bg-card border border-border p-6 rounded-lg space-y-3 transition-all hover:border-foreground/25">
+            <div className="bg-card border border-border p-6 rounded-lg space-y-3 glow-card card-3d-lift">
               <div className="flex h-9 w-9 items-center justify-center rounded border border-border bg-accent/20">
                 <Target className="h-4.5 w-4.5 text-foreground" />
               </div>
@@ -191,7 +220,7 @@ export default function LandingPage() {
             </div>
 
             {/* Block 3 */}
-            <div className="bg-card border border-border p-6 rounded-lg space-y-3 transition-all hover:border-foreground/25">
+            <div className="bg-card border border-border p-6 rounded-lg space-y-3 glow-card card-3d-lift">
               <div className="flex h-9 w-9 items-center justify-center rounded border border-border bg-accent/20">
                 <Shield className="h-4.5 w-4.5 text-foreground" />
               </div>
