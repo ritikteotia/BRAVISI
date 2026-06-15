@@ -147,7 +147,7 @@ export default function AnalyticsPage() {
               <XAxis type="number" dataKey="effort" name="Effort" domain={[0, 100]} tick={{ fontSize: 11, fill: "oklch(0.5 0 0)" }} label={{ value: "Effort →", position: "bottom", fontSize: 10, fill: "oklch(0.5 0 0)" }} />
               <YAxis type="number" dataKey="impact" name="Impact" domain={[0, 100]} tick={{ fontSize: 11, fill: "oklch(0.5 0 0)" }} label={{ value: "Impact →", angle: -90, position: "left", fontSize: 10, fill: "oklch(0.5 0 0)" }} />
               <ZAxis type="number" dataKey="size" range={[60, 200]} />
-              <Tooltip contentStyle={{ background: "oklch(0.1 0.015 265)", border: "1px solid oklch(0.2 0 0)", borderRadius: 8, fontSize: 12 }} formatter={(value: number, name: string) => [value, name]} />
+              <Tooltip contentStyle={{ background: "oklch(0.1 0.015 265)", border: "1px solid oklch(0.2 0 0)", borderRadius: 8, fontSize: 12 }} />
               <Scatter name="Opportunities" data={opportunityData} fill="#a855f7" />
             </ScatterChart>
           </ResponsiveContainer>

@@ -32,6 +32,10 @@
 - **📊 Comprehensive Brand AI Scan**: Instant analysis of citation metrics across **ChatGPT**, **Gemini**, **Copilot**, and **Claude**.
 - **🧠 Offline-First Parity**: Zero-setup mock scanning using deterministic PRNG domain-seeding, letting you evaluate dashboard UI features immediately.
 - **📑 B2B Executive Report Generator**: Leverages structured AI calls (`gemini-2.5-flash`) to generate deep analysis report matrices of missing corpus entities, content gaps, and roadmap strategies.
+- **📈 Advanced Analytics & Radar**: Interactive heatmaps, brand radars, competitor positioning maps, and GEO opportunity matrices.
+- **💬 Conversational AI Copilot**: Embedded AI assistant capable of answering custom queries about your brand's AI SEO performance.
+- **🧪 Generative Prompt Lab**: Experiment with custom user prompts and queries to diagnose how brand citations trigger.
+- **🔍 SEO & GEO Website Audit**: Automated diagnostic audits targeting robots.txt, schema.org tags, entity density, and XML sitemaps.
 - **⚖️ Side-by-Side Competitive Analysis**: Benchmark visibility scores against top niche competitors with trend differences.
 - **🎯 Dynamic Actionable Insights**: Automatically extracts and prioritizes technical improvements (Structured Schema markups, Robots.txt blockers, Content guides).
 - **🖨️ Presentation-Ready PDFs**: Tailored stylesheets optimize the dashboard for physical printing and digital PDF sharing for enterprise stakeholders.
@@ -190,11 +194,20 @@ The `src/lib/mappers.ts` file isolates server schemas from UI state models. This
 ```text
 bravisi/
 ├── src/
-│   ├── app/                      # Next.js App Router route handlers
-│   │   ├── dashboard/
+│   ├── app/                      # Next.js App Router routes & layouts
+│   │   ├── dashboard/            # Brand Strategy Dashboard (Authenticated context)
+│   │   │   ├── alerts/           # Brand monitoring and event-driven trigger alerts
+│   │   │   ├── analytics/        # Radar strength charts, GEO opportunity heatmaps
+│   │   │   ├── api-keys/         # External search / Gemini credentials settings
+│   │   │   ├── audit/            # Full-page GEO crawls & technical SEO diagnostics
+│   │   │   ├── competitors/      # Side-by-side benchmarking dashboard
+│   │   │   ├── content-strategy/ # Generative B2B keyword & content gap suggestions
+│   │   │   ├── copilot/          # Embedded brand-knowledgeable chat copilot
+│   │   │   ├── prompt-lab/       # Interactive prompt validator & query execution
+│   │   │   ├── layout.tsx        # Common dashboard structure (Sidebar + Topbar)
 │   │   │   └── page.tsx          # Dynamic scan layout & page coordinator
-│   │   ├── globals.css           # Global custom classes (OKLCH gradients & glassmorphism)
-│   │   ├── layout.tsx            # Main HTML layouts
+│   │   ├── globals.css           # Global custom classes (OKLCH variables, animations, glassmorphism)
+│   │   ├── layout.tsx            # Main HTML layout wrapper
 │   │   └── page.tsx              # Public corporate landing page
 │   ├── components/               # React JSX Components
 │   │   ├── dashboard/            # Sub-components for visualization
@@ -205,11 +218,14 @@ bravisi/
 │   │   │   ├── professional-report.tsx # Printable B2B audit report layout
 │   │   │   ├── score-ring.tsx    # Semi-circular gauge for visibility score
 │   │   │   └── trend-chart.tsx   # Recharts area graph for growth timeline
-│   │   ├── ui/                   # Shared primitive UI elements (Base UI variants)
+│   │   ├── ui/                   # Shared design system primitive UI elements
+│   │   │   ├── sidebar.tsx       # Expandable dashboard navigation tree
+│   │   │   ├── topbar.tsx        # Breadcrumbs & user status header bar
+│   │   │   ├── dropdown-menu.tsx # Radix-ui interactive dropdown portals
+│   │   │   └── dialog.tsx        # Radix-ui overlay modals
 │   │   ├── navbar.tsx            # Main website navigation
 │   │   ├── hero.tsx              # Animated landing page banner
-│   │   ├── features.tsx          # Marketing grid items
-│   │   └── footer.tsx            # Footers
+│   │   └── features.tsx          # Marketing grid items
 │   ├── actions/                  # Next.js Server Actions
 │   │   ├── analyze-brand.ts      # Offline deterministic scan engine (Mulberry32)
 │   │   └── generate-report.ts    # Online Gemini 2.5 structured report integration
@@ -217,7 +233,7 @@ bravisi/
 │       ├── schemas.ts            # Zod validation models
 │       ├── mappers.ts            # Schema-to-UI mapper functions
 │       └── data.ts               # Fallbacks & typescript interfaces
-├── public/                       # Global assets (SVGs, icons)
+├── public/                       # Global assets (SVGs, logos)
 ├── components.json               # Shadcn/Base-UI structure config
 ├── next.config.ts                # Next.js bundler config
 ├── postcss.config.mjs            # CSS parsing rules
