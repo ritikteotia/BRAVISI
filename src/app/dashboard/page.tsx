@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, AlertCircle, ArrowLeft } from "lucide-react";
+import { Search, AlertCircle, ArrowLeft, Globe, Link2, Tag, Users, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -30,7 +30,7 @@ export default function DashboardOverview() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [loadingMessage, setLoadingMessage] = useState("");
+  const [activeStep, setActiveStep] = useState(0);
 
   // Sync state with global context on mount or when context updates
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function DashboardOverview() {
     setIsAnalyzing(true);
     setError(null);
     setLoadingProgress(0);
-    setLoadingMessage("Initializing analysis engine...");
+    setActiveStep(0);
 
     const competitorList = competitors
       .split(",")
@@ -60,14 +60,14 @@ export default function DashboardOverview() {
       const pct = Math.min(98, (elapsed / expectedDuration) * 98);
       setLoadingProgress(Math.round(pct));
 
-      if (pct < 20) {
-        setLoadingMessage("Connecting to search nodes...");
-      } else if (pct < 45) {
-        setLoadingMessage("Parsing model corpora for citations...");
-      } else if (pct < 70) {
-        setLoadingMessage("Analyzing semantic classification...");
+      if (pct < 25) {
+        setActiveStep(0);
+      } else if (pct < 50) {
+        setActiveStep(1);
+      } else if (pct < 75) {
+        setActiveStep(2);
       } else {
-        setLoadingMessage("Mapping competitive gap footprints...");
+        setActiveStep(3);
       }
     }, 50);
 
@@ -80,7 +80,7 @@ export default function DashboardOverview() {
       );
       clearInterval(progressInterval);
       setLoadingProgress(100);
-      setLoadingMessage("Report generated.");
+      setActiveStep(4);
 
       setTimeout(() => {
         setBrandData({
@@ -92,7 +92,7 @@ export default function DashboardOverview() {
           analysisResult: result,
         });
         setIsAnalyzing(false);
-      }, 300);
+      }, 400);
     } catch (err) {
       clearInterval(progressInterval);
       setIsAnalyzing(false);
@@ -111,16 +111,23 @@ export default function DashboardOverview() {
 
   const showResults = isAnalyzed && globalAnalysisResult;
 
+  const loadingSteps = [
+    "Establishing secure crawl connections...",
+    "Retrieving search database indexes...",
+    "Parsing conversational entity citations...",
+    "Constructing strategic recommendation matrices...",
+  ];
+
   return (
     <div className="space-y-8 font-sans">
       {/* Header Area */}
       {!isAnalyzing && !showResults && (
         <div className="space-y-1.5">
           <h1 className="text-xl font-extrabold tracking-tight text-foreground uppercase">
-            AI Search Brand Intelligence
+            AI Search Intelligence Console
           </h1>
           <p className="text-xs font-semibold text-muted-foreground">
-            Analyze brand presence, competitive positioning, and coverage gaps across conversational AI models.
+            Audit presence, track conversational citations, and map competitor positioning.
           </p>
         </div>
       )}
@@ -132,70 +139,89 @@ export default function DashboardOverview() {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-xl"
         >
-          <Card className="border-border bg-card">
+          <Card className="border-border bg-card shadow-lg">
             <CardContent className="p-6 space-y-4">
-              <div className="space-y-3">
-                <div className="space-y-1">
+              <div className="space-y-4">
+                {/* Website URL */}
+                <div className="space-y-1.5">
                   <label htmlFor="dashboard-url" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                    Website URL *
+                    Website Domain *
                   </label>
-                  <Input
-                    id="dashboard-url"
-                    placeholder="e.g. stripe.com"
-                    value={websiteUrl}
-                    onChange={(e) => setWebsiteUrl(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    className="h-9 border-border bg-background text-xs font-semibold text-foreground"
-                  />
+                  <div className="relative flex items-center">
+                    <Globe className="absolute left-3 h-3.5 w-3.5 text-muted-foreground/60" />
+                    <Input
+                      id="dashboard-url"
+                      placeholder="e.g. stripe.com"
+                      value={websiteUrl}
+                      onChange={(e) => setWebsiteUrl(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      className="pl-9 h-9 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-1">
+
+                {/* Product URL */}
+                <div className="space-y-1.5">
                   <label htmlFor="dashboard-product-url" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                    Product URL *
+                    Product/Service Landing URL *
                   </label>
-                  <Input
-                    id="dashboard-product-url"
-                    placeholder="e.g. stripe.com/payments"
-                    value={productUrl}
-                    onChange={(e) => setProductUrl(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    className="h-9 border-border bg-background text-xs font-semibold text-foreground"
-                  />
+                  <div className="relative flex items-center">
+                    <Link2 className="absolute left-3 h-3.5 w-3.5 text-muted-foreground/60" />
+                    <Input
+                      id="dashboard-product-url"
+                      placeholder="e.g. stripe.com/payments"
+                      value={productUrl}
+                      onChange={(e) => setProductUrl(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      className="pl-9 h-9 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-1">
+
+                {/* Product Name */}
+                <div className="space-y-1.5">
                   <label htmlFor="dashboard-brand" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                    Product Name *
+                    Product / Brand Name *
                   </label>
-                  <Input
-                    id="dashboard-brand"
-                    placeholder="e.g. Stripe Payments"
-                    value={brandName}
-                    onChange={(e) => setBrandName(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    className="h-9 border-border bg-background text-xs font-semibold text-foreground"
-                  />
+                  <div className="relative flex items-center">
+                    <Tag className="absolute left-3 h-3.5 w-3.5 text-muted-foreground/60" />
+                    <Input
+                      id="dashboard-brand"
+                      placeholder="e.g. Stripe Payments"
+                      value={brandName}
+                      onChange={(e) => setBrandName(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      className="pl-9 h-9 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-1">
+
+                {/* Competitors */}
+                <div className="space-y-1.5">
                   <label htmlFor="dashboard-competitors" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                    Competitors (Optional, comma-separated)
+                    Compare Against (Optional, comma-separated)
                   </label>
-                  <Input
-                    id="dashboard-competitors"
-                    placeholder="e.g. Adyen, PayPal"
-                    value={competitors}
-                    onChange={(e) => setCompetitors(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    className="h-9 border-border bg-background text-xs font-semibold text-foreground"
-                  />
+                  <div className="relative flex items-center">
+                    <Users className="absolute left-3 h-3.5 w-3.5 text-muted-foreground/60" />
+                    <Input
+                      id="dashboard-competitors"
+                      placeholder="e.g. Adyen, PayPal"
+                      value={competitors}
+                      onChange={(e) => setCompetitors(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      className="pl-9 h-9 border-border bg-background text-xs font-bold text-foreground focus-visible:ring-1 focus-visible:ring-foreground"
+                    />
+                  </div>
                 </div>
               </div>
 
               <Button
                 onClick={handleAnalyze}
                 disabled={!websiteUrl.trim() || !productUrl.trim() || !brandName.trim() || isAnalyzing}
-                className="w-full h-9 rounded bg-primary text-primary-foreground text-xs font-bold hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-border"
+                className="w-full h-9 mt-2 rounded bg-primary text-primary-foreground text-xs font-extrabold hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-border shadow-sm"
               >
                 <Search className="mr-2 h-3.5 w-3.5" />
-                Analyze Product
+                Run Intelligence Audit
               </Button>
             </CardContent>
           </Card>
@@ -206,27 +232,56 @@ export default function DashboardOverview() {
       <AnimatePresence mode="wait">
         {isAnalyzing && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col justify-center py-20 text-left max-w-sm"
+            className="flex flex-col justify-center py-16 text-left max-w-md"
           >
-            <div className="space-y-4">
-              <div className="flex justify-between items-baseline">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-foreground">
-                  Running brand audit
+            <div className="space-y-6 bg-card border border-border p-6 rounded-lg shadow-md">
+              <div className="flex justify-between items-baseline border-b border-border/50 pb-2">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-foreground">
+                  Auditing brand footprint
                 </span>
                 <span className="text-xs font-extrabold font-mono text-foreground">{loadingProgress}%</span>
               </div>
-              <div className="h-[2px] w-full bg-border overflow-hidden rounded">
+
+              {/* Step checklist */}
+              <div className="space-y-3">
+                {loadingSteps.map((step, idx) => {
+                  const isDone = activeStep > idx;
+                  const isActive = activeStep === idx;
+                  return (
+                    <div key={idx} className="flex items-center gap-2.5">
+                      <CheckCircle2
+                        className={`h-4.5 w-4.5 shrink-0 transition-colors ${
+                          isDone
+                            ? "text-opportunity fill-opportunity/10"
+                            : isActive
+                            ? "text-foreground animate-pulse"
+                            : "text-muted-foreground/35"
+                        }`}
+                      />
+                      <span className={`text-[11px] font-bold transition-colors ${
+                        isDone
+                          ? "text-foreground"
+                          : isActive
+                          ? "text-foreground font-extrabold"
+                          : "text-muted-foreground/60"
+                      }`}>
+                        {step}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Progress bar */}
+              <div className="h-[2px] w-full bg-secondary overflow-hidden rounded">
                 <div
                   className="h-full bg-foreground transition-all duration-150 ease-out"
                   style={{ width: `${loadingProgress}%` }}
                 />
               </div>
-              <p className="text-xs font-bold font-mono text-muted-foreground animate-pulse">
-                {loadingMessage}
-              </p>
             </div>
           </motion.div>
         )}
