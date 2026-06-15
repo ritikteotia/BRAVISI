@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Sidebar from "@/components/ui/sidebar";
 import Topbar from "@/components/ui/topbar";
 import { Toaster } from "sonner";
+import { BrandProvider } from "@/context/BrandContext";
 
 export default function DashboardLayout({
   children,
@@ -15,7 +16,8 @@ export default function DashboardLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <BrandProvider>
+      <div className="flex min-h-screen bg-background">
       {/* Sidebar - Desktop */}
       <div className="hidden lg:block">
         <Sidebar
@@ -66,6 +68,7 @@ export default function DashboardLayout({
           className: "!bg-card !text-foreground !border-border",
         }}
       />
-    </div>
+      </div>
+    </BrandProvider>
   );
 }

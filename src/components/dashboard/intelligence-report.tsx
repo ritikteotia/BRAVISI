@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { AlertTriangle, CheckCircle, Info, ExternalLink, HelpCircle } from "lucide-react";
 import type { AnalysisResult } from "@/lib/schemas";
 
 interface IntelligenceReportProps {
@@ -9,7 +8,7 @@ interface IntelligenceReportProps {
 }
 
 export default function IntelligenceReport({ result }: IntelligenceReportProps) {
-  const { brandName, overallScore, sentiment, competitorScores, recommendedActions, contentGaps } = result;
+  const { brandName, overallScore, sentiment, competitorScores, recommendedActions } = result;
 
   // 1. Determine Presence Level
   let presenceLevel = "Low";
@@ -91,80 +90,65 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
     },
   ];
 
-  // 6. Gaps Calculation
-  const gapsList = contentGaps.length > 0 ? contentGaps : [
-    { query: `${brandName} security framework`, intent: "High" },
-    { query: `pricing plans for ${brandName}`, intent: "Medium" }
-  ];
-
-  // 7. Footprint Breakdown
-  const footprint = [
-    { source: "Developer Documentation", weight: Math.min(95, overallScore + 15), status: "Primary source" },
-    { source: "Wikidata / Wikipedia", weight: Math.min(90, overallScore + 5), status: "Authority source" },
-    { source: "GitHub Repositories", weight: Math.max(10, overallScore - 10), status: "Technical source" },
-    { source: "Industry Blog Posts", weight: Math.min(85, overallScore + 10), status: "Freshness signal" },
-    { source: "StackOverflow Mentions", weight: Math.max(15, overallScore - 20), status: "Developer signal" },
-  ];
-
   return (
     <div className="space-y-10 font-sans text-xs">
       {/* 1. EXECUTIVE SUMMARY */}
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold tracking-tight text-foreground uppercase border-b border-border pb-1">
+        <h2 className="text-xs font-extrabold tracking-tight text-foreground uppercase border-b border-border pb-1">
           01. Executive Summary
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-border border border-border">
           {/* Card 1 */}
           <div className="bg-card p-4 space-y-1.5">
-            <span className="text-muted-foreground font-medium uppercase tracking-wider text-[9px]">
+            <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
               AI Presence Index
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className={`text-sm font-bold ${presenceLevel === "High" ? "text-opportunity" : presenceLevel === "Moderate" ? "text-recommendation" : "text-risk"}`}>
+              <span className={`text-sm font-extrabold ${presenceLevel === "High" ? "text-opportunity" : presenceLevel === "Moderate" ? "text-recommendation" : "text-risk"}`}>
                 {presenceLevel}
               </span>
-              <span className="text-muted-foreground">/ 100</span>
+              <span className="text-muted-foreground font-bold">/ 100</span>
             </div>
-            <p className="text-muted-foreground leading-relaxed font-normal">
+            <p className="text-muted-foreground leading-relaxed font-semibold">
               {presenceDesc}
             </p>
           </div>
 
           {/* Card 2 */}
           <div className="bg-card p-4 space-y-1.5">
-            <span className="text-muted-foreground font-medium uppercase tracking-wider text-[9px]">
+            <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
               Perceived Positioning
             </span>
-            <div className="text-sm font-bold text-foreground truncate">
+            <div className="text-sm font-extrabold text-foreground truncate">
               {primaryPositioning.split(",")[0] || primaryPositioning}
             </div>
-            <p className="text-muted-foreground leading-relaxed font-normal">
+            <p className="text-muted-foreground leading-relaxed font-semibold">
               {primaryPositioning}
             </p>
           </div>
 
           {/* Card 3 */}
           <div className="bg-card p-4 space-y-1.5">
-            <span className="text-muted-foreground font-medium uppercase tracking-wider text-[9px]">
+            <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
               Recommendation rate
             </span>
-            <div className="text-sm font-bold text-foreground">
+            <div className="text-sm font-extrabold text-foreground">
               {overallScore}%
             </div>
-            <p className="text-muted-foreground leading-relaxed font-normal">
+            <p className="text-muted-foreground leading-relaxed font-semibold">
               {recommendationRate}
             </p>
           </div>
 
           {/* Card 4 */}
           <div className="bg-card p-4 space-y-1.5">
-            <span className="text-muted-foreground font-medium uppercase tracking-wider text-[9px]">
+            <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
               Critical Opportunity
             </span>
-            <div className="text-sm font-bold text-foreground truncate">
+            <div className="text-sm font-extrabold text-foreground truncate">
               {biggestOpportunity}
             </div>
-            <p className="text-muted-foreground leading-relaxed font-normal">
+            <p className="text-muted-foreground leading-relaxed font-semibold">
               Correcting this issue offers the fastest path to citation share gains.
             </p>
           </div>
@@ -173,7 +157,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
 
       {/* 2. AI PERCEPTION */}
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold tracking-tight text-foreground uppercase border-b border-border pb-1">
+        <h2 className="text-xs font-extrabold tracking-tight text-foreground uppercase border-b border-border pb-1">
           02. Model-by-Model AI Perception
         </h2>
         <div className="space-y-3">
@@ -182,10 +166,10 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
               key={item.model}
               className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6 border-b border-border pb-3"
             >
-              <div className="w-40 shrink-0 font-semibold text-foreground">
+              <div className="w-40 shrink-0 font-extrabold text-foreground">
                 {item.model}
               </div>
-              <div className="flex-1 text-muted-foreground leading-relaxed font-normal">
+              <div className="flex-1 text-muted-foreground leading-relaxed font-semibold">
                 {item.narrative}
               </div>
             </div>
@@ -193,28 +177,28 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
         </div>
       </section>
 
-      {/* 3. COMPETITOR LANDSCAPE */}
+      {/* 3. COMPETITOR LANDSCAPE MATRIX */}
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold tracking-tight text-foreground uppercase border-b border-border pb-1">
+        <h2 className="text-xs font-extrabold tracking-tight text-foreground uppercase border-b border-border pb-1">
           03. Competitor Landscape
         </h2>
 
         {/* 2D Positioning Matrix */}
         <div className="border border-border p-4 bg-card space-y-2">
-          <span className="text-muted-foreground font-medium uppercase tracking-wider text-[9px]">
-            Strategic Positioning Matrix
+          <span className="text-muted-foreground font-bold uppercase tracking-wider text-[9px]">
+            Strategic Positioning Matrix (Presence vs. Recommendations)
           </span>
-          <div className="relative h-44 border-l border-b border-border bg-accent/20 flex flex-col justify-between p-3">
+          <div className="relative h-44 border-l border-b border-border bg-accent/10 flex flex-col justify-between p-3">
             {/* Quadrant Titles */}
-            <div className="absolute top-2 right-2 text-muted-foreground/35 font-mono">
+            <div className="absolute top-2 right-2 text-muted-foreground/40 font-mono font-bold text-[9px]">
               High Citation / High Score
             </div>
-            <div className="absolute bottom-2 left-2 text-muted-foreground/35 font-mono">
+            <div className="absolute bottom-2 left-2 text-muted-foreground/40 font-mono font-bold text-[9px]">
               Low Citation / Low Score
             </div>
 
             {/* Matrix Items */}
-            {competitorScores.map((c, i) => {
+            {competitorScores.map((c) => {
               // Map overall score directly to coordinates
               const xPos = Math.max(10, Math.min(90, c.score));
               const yPos = Math.max(10, Math.min(90, Math.round(c.score * 0.9)));
@@ -230,13 +214,13 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
                     transform: "translate(-50%, 50%)",
                   }}
                 >
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 bg-card/85 border border-border/60 px-2 py-0.5 rounded shadow-sm">
                     <span
-                      className={`h-2.5 w-2.5 rounded-full border ${
-                        isMain ? "bg-opportunity border-foreground animate-pulse" : "bg-muted-foreground border-border"
+                      className={`h-2 w-2 rounded-full ${
+                        isMain ? "bg-opportunity border-foreground animate-pulse" : "bg-recommendation border-border"
                       }`}
                     />
-                    <span className={`font-semibold ${isMain ? "text-foreground" : "text-muted-foreground"}`}>
+                    <span className={`font-bold text-[10px] ${isMain ? "text-foreground" : "text-muted-foreground"}`}>
                       {c.name} {isMain && "(You)"}
                     </span>
                   </div>
@@ -244,116 +228,22 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
               );
             })}
           </div>
-          <div className="flex justify-between font-mono text-[9px] text-muted-foreground/60 px-1">
+          <div className="flex justify-between font-mono text-[9px] font-bold text-muted-foreground/60 px-1">
             <span>← Underrepresented</span>
             <span>Recommended →</span>
           </div>
         </div>
-
-        {/* Comparison Table */}
-        <div className="border border-border">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-border bg-accent/30 font-medium text-muted-foreground">
-                <th className="p-3">Brand Name</th>
-                <th className="p-3 text-right">GEO Score</th>
-                <th className="p-3 text-right">Citation Share</th>
-                <th className="p-3 text-right">Sentiment</th>
-              </tr>
-            </thead>
-            <tbody>
-              {competitorScores.map((c) => {
-                const isMain = c.name === brandName;
-                const mentionShare = Math.round(c.score * 0.48 * 10) / 10;
-                let cSentiment = "Neutral";
-                if (c.score >= 65) cSentiment = "Positive";
-                else if (c.score < 35) cSentiment = "Negative";
-
-                return (
-                  <tr key={c.name} className={`border-b border-border last:border-none ${isMain ? "bg-accent/40 font-semibold" : ""}`}>
-                    <td className="p-3 text-foreground flex items-center gap-2">
-                      {c.name} {isMain && <span className="text-[10px] font-mono text-opportunity bg-opportunity/10 border border-opportunity/25 px-1 py-0.5 rounded">You</span>}
-                    </td>
-                    <td className="p-3 text-right text-foreground font-mono">{c.score}</td>
-                    <td className="p-3 text-right text-foreground font-mono">{mentionShare}%</td>
-                    <td className={`p-3 text-right font-medium ${cSentiment === "Positive" ? "text-opportunity" : cSentiment === "Negative" ? "text-risk" : "text-muted-foreground"}`}>
-                      {cSentiment}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
       </section>
 
-      {/* 4. POSITIONING GAPS */}
+      {/* 4. STRATEGIC RECOMMENDATIONS */}
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold tracking-tight text-foreground uppercase border-b border-border pb-1">
-          04. Knowledge & Positioning Gaps
-        </h2>
-        <div className="border border-border divide-y divide-border">
-          {gapsList.map((gap, i) => (
-            <div key={i} className="p-3 flex items-start justify-between gap-6">
-              <div className="space-y-1">
-                <div className="font-semibold text-foreground font-mono">
-                  {gap.query}
-                </div>
-                <p className="text-muted-foreground font-normal">
-                  Competitors are heavily recommended in this segment. Brand presence: <span className="text-risk font-semibold">None</span>.
-                </p>
-              </div>
-              <div className="shrink-0 flex items-center gap-2">
-                <span className={`text-[10px] font-semibold font-mono uppercase border px-1.5 py-0.5 rounded ${
-                  gap.intent === "High" ? "bg-risk/10 border-risk/25 text-risk" : "bg-warning/10 border-warning/25 text-warning"
-                }`}>
-                  {gap.intent} Priority
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 5. KNOWLEDGE FOOTPRINT */}
-      <section className="space-y-4">
-        <h2 className="text-sm font-semibold tracking-tight text-foreground uppercase border-b border-border pb-1">
-          05. Knowledge Footprint Influence
-        </h2>
-        <div className="space-y-3">
-          {footprint.map((item) => (
-            <div key={item.source} className="flex items-center justify-between gap-6">
-              <div className="w-44 shrink-0 font-medium text-foreground">
-                {item.source}
-              </div>
-              <div className="flex-1 flex items-center gap-3">
-                <div className="h-1.5 flex-1 bg-border rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-foreground"
-                    style={{ width: `${item.weight}%` }}
-                  />
-                </div>
-                <span className="w-8 shrink-0 text-right font-mono font-semibold text-foreground">
-                  {item.weight}%
-                </span>
-              </div>
-              <div className="w-24 shrink-0 text-right font-mono text-muted-foreground">
-                {item.status}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 6. STRATEGIC RECOMMENDATIONS */}
-      <section className="space-y-4">
-        <h2 className="text-sm font-semibold tracking-tight text-foreground uppercase border-b border-border pb-1">
-          06. Strategic Recommendations
+        <h2 className="text-xs font-extrabold tracking-tight text-foreground uppercase border-b border-border pb-1">
+          04. Strategic Action Plan
         </h2>
         <div className="border border-border">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-border bg-accent/30 font-medium text-muted-foreground">
+              <tr className="border-b border-border bg-accent/20 font-bold text-muted-foreground">
                 <th className="p-3 w-28">Severity</th>
                 <th className="p-3">Required Action Plan</th>
               </tr>
@@ -367,13 +257,13 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
                 return (
                   <tr key={i} className="border-b border-border last:border-none">
                     <td className="p-3 align-top">
-                      <span className={`text-[9px] font-mono font-bold uppercase tracking-wider border px-1.5 py-0.5 rounded ${colorClass}`}>
+                      <span className={`text-[9px] font-mono font-extrabold uppercase tracking-wider border px-1.5 py-0.5 rounded ${colorClass}`}>
                         {action.type}
                       </span>
                     </td>
                     <td className="p-3 space-y-1">
-                      <div className="font-semibold text-foreground">{action.title}</div>
-                      <p className="text-muted-foreground font-normal leading-relaxed">{action.description}</p>
+                      <div className="font-extrabold text-foreground">{action.title}</div>
+                      <p className="text-muted-foreground font-semibold leading-relaxed">{action.description}</p>
                     </td>
                   </tr>
                 );

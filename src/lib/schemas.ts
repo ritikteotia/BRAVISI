@@ -47,6 +47,7 @@ export type ContentGap = z.infer<typeof ContentGapSchema>;
 export const AnalysisResultSchema = z.object({
   domainName: z.string(),
   brandName: z.string(),
+  productUrl: z.string(),
   overallScore: z.number().min(0).max(100),
   sentiment: z.enum(["Positive", "Neutral", "Negative"]),
   totalMentions: z.number().int().nonnegative(),
@@ -54,6 +55,7 @@ export const AnalysisResultSchema = z.object({
   competitorScores: z.array(CompetitorScoreSchema),
   recommendedActions: z.array(RecommendedActionSchema),
   contentGaps: z.array(ContentGapSchema),
+  isFamous: z.boolean().optional(),
 });
 
 export type AnalysisResult = z.infer<typeof AnalysisResultSchema>;

@@ -326,53 +326,78 @@ function generateContentGaps(
 
 export async function analyzeBrandVisibility(
   url: string,
+  productUrl: string,
   brandName: string,
   competitors: string[]
 ): Promise<AnalysisResult> {
   // ── 1. Extract domain & seed ───────────────────────────────
   const domainName = extractDomain(url);
-  const seed = hashToSeed(domainName);
+  const seed = hashToSeed(domainName + brandName);
   const rng = mulberry32(seed);
 
-  // ── 2. Artificial delay (2.5 – 3.5s) ──────────────────────
+  // ── 2. Wikipedia search for fame check ─────────────────────
+  let isFamous = false;
+  try {
+    const wikiUrl = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(brandName)}&limit=1&format=json`;
+    const res = await fetch(wikiUrl);
+    if (res.ok) {
+      const data = await res.json();
+      if (data[1] && data[1].length > 0) {
+        const matchTitle = data[1][0].toLowerCase();
+        if (matchTitle === brandName.toLowerCase() || matchTitle.includes(brandName.toLowerCase())) {
+          isFamous = true;
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Wikipedia search failed:", e);
+  }
+
+  // Also verify if it is in WELL_KNOWN_BOOSTS
+  if (WELL_KNOWN_BOOSTS[domainName] !== undefined) {
+    isFamous = true;
+  }
+
+  // ── 3. Artificial delay (2.5 – 3.5s) ──────────────────────
   const delay = 2500 + seededInt(rng, 0, 1000);
   await new Promise<void>((resolve) => setTimeout(resolve, delay));
 
-  // ── 3. Overall score ───────────────────────────────────────
-  // Well-known domains get a fixed high score; others are seeded
-  const overallScore =
-    WELL_KNOWN_BOOSTS[domainName] ?? seededInt(rng, 8, 55);
+  // ── 4. Overall score ───────────────────────────────────────
+  let overallScore = seededInt(rng, 15, 50);
+  if (isFamous) {
+    overallScore = WELL_KNOWN_BOOSTS[domainName] ?? seededInt(rng, 75, 96);
+  }
 
-  // ── 4. Sentiment (derived from score) ──────────────────────
+  // ── 5. Sentiment (derived from score) ──────────────────────
   let sentiment: "Positive" | "Neutral" | "Negative";
   if (overallScore >= 65) sentiment = "Positive";
   else if (overallScore >= 35) sentiment = "Neutral";
   else sentiment = "Negative";
 
-  // ── 5. Total mentions (correlated with score) ──────────────
+  // ── 6. Total mentions (correlated with score) ──────────────
   const baseMentions = Math.round(overallScore * seededFloat(rng, 12, 22, 1));
   const totalMentions = Math.max(baseMentions, seededInt(rng, 15, 80));
 
-  // ── 6. Mention distribution across AI models ──────────────
+  // ── 7. Mention distribution across AI models ──────────────
   const mentionDistribution = generateMentionDistribution(rng);
 
-  // ── 7. Competitor scores ───────────────────────────────────
-  // Always include the user's own brand as the first entry
+  // ── 8. Competitor scores ───────────────────────────────────
   const competitorScores: CompetitorScore[] = [
     { name: brandName, score: overallScore, difference: 0 },
     ...generateCompetitorScores(rng, overallScore, competitors),
   ];
 
-  // ── 8. Recommended actions (score-aware) ───────────────────
+  // ── 9. Recommended actions (score-aware) ───────────────────
   const recommendedActions = generateActions(rng, overallScore);
 
-  // ── 9. Content gaps ────────────────────────────────────────
+  // ── 10. Content gaps ────────────────────────────────────────
   const contentGaps = generateContentGaps(rng, brandName);
 
-  // ── 10. Assemble & validate ────────────────────────────────
+  // ── 11. Assemble & validate ────────────────────────────────
   const result: AnalysisResult = {
     domainName,
     brandName,
+    productUrl,
     overallScore,
     sentiment,
     totalMentions,
@@ -380,8 +405,8 @@ export async function analyzeBrandVisibility(
     competitorScores,
     recommendedActions,
     contentGaps,
+    isFamous,
   };
 
-  // Runtime validation (throws if the shape is wrong — should never happen)
   return AnalysisResultSchema.parse(result);
 }

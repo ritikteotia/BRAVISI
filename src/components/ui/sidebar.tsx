@@ -53,7 +53,6 @@ const navigation: NavGroup[] = [
     label: "Intelligence",
     items: [
       { label: "AI Citations", href: "/dashboard/citations", icon: Search },
-      { label: "Prompt Lab", href: "/dashboard/prompt-lab", icon: FlaskConical },
       { label: "Competitor Analysis", href: "/dashboard/competitors", icon: Users },
       { label: "Website Audit", href: "/dashboard/audit", icon: Shield },
     ],
@@ -61,24 +60,8 @@ const navigation: NavGroup[] = [
   {
     label: "Strategy",
     items: [
-      { label: "AI Copilot", href: "/dashboard/copilot", icon: MessageSquare },
       { label: "Content Strategy", href: "/dashboard/content-strategy", icon: FileText },
       { label: "GEO Roadmap", href: "/dashboard/roadmap", icon: Map },
-    ],
-  },
-  {
-    label: "Analytics",
-    items: [
-      { label: "History", href: "/dashboard/history", icon: Clock },
-      { label: "Visualizations", href: "/dashboard/analytics", icon: PieChart },
-    ],
-  },
-  {
-    label: "Platform",
-    items: [
-      { label: "Alerts", href: "/dashboard/alerts", icon: Bell },
-      { label: "API Keys", href: "/dashboard/api-keys", icon: Key },
-      { label: "Settings", href: "/dashboard/settings", icon: Settings },
     ],
   },
 ];
@@ -204,6 +187,43 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
             </div>
           ))}
         </nav>
+
+        {/* Pinned Settings Footer */}
+        <div className="border-t border-border p-2 bg-sidebar/80">
+          {collapsed ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/dashboard/settings"
+                  className={cn(
+                    "flex items-center justify-center rounded p-2 text-xs font-medium transition-colors",
+                    pathname === "/dashboard/settings"
+                      ? "bg-accent text-foreground"
+                      : "text-muted-foreground hover:bg-accent/40 hover:text-foreground"
+                  )}
+                >
+                  <Settings className="h-4 w-4 shrink-0 text-foreground" />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="text-[11px] font-medium border border-border bg-popover text-popover-foreground">
+                Settings
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <Link
+              href="/dashboard/settings"
+              className={cn(
+                "flex items-center gap-2.5 rounded px-3 py-2 text-xs font-medium transition-colors",
+                pathname === "/dashboard/settings"
+                  ? "bg-accent text-foreground"
+                  : "text-muted-foreground hover:bg-accent/40 hover:text-foreground"
+              )}
+            >
+              <Settings className="h-4 w-4 shrink-0 text-foreground" />
+              <span className="font-bold text-foreground">Settings</span>
+            </Link>
+          )}
+        </div>
       </motion.aside>
     </TooltipProvider>
   );

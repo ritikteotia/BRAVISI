@@ -1,30 +1,48 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Activity, Search, AlertCircle, ArrowLeft } from "lucide-react";
+import { Search, AlertCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import IntelligenceReport from "@/components/dashboard/intelligence-report";
 import { analyzeBrandVisibility } from "@/actions/analyze-brand";
-import type { AnalysisResult } from "@/lib/schemas";
+import { useBrand } from "@/context/BrandContext";
 
 export default function DashboardOverview() {
+  const {
+    brandName: globalBrandName,
+    websiteUrl: globalWebsiteUrl,
+    productUrl: globalProductUrl,
+    competitors: globalCompetitors,
+    analysisResult: globalAnalysisResult,
+    setBrandData,
+    clearBrandData,
+    isAnalyzed,
+  } = useBrand();
+
   const [websiteUrl, setWebsiteUrl] = useState("");
+  const [productUrl, setProductUrl] = useState("");
   const [brandName, setBrandName] = useState("");
   const [competitors, setCompetitors] = useState("");
+
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingMessage, setLoadingMessage] = useState("");
 
+  // Sync state with global context on mount or when context updates
+  useEffect(() => {
+    if (globalBrandName) setBrandName(globalBrandName);
+    if (globalWebsiteUrl) setWebsiteUrl(globalWebsiteUrl);
+    if (globalProductUrl) setProductUrl(globalProductUrl);
+    if (globalCompetitors) setCompetitors(globalCompetitors);
+  }, [globalBrandName, globalWebsiteUrl, globalProductUrl, globalCompetitors]);
+
   const handleAnalyze = useCallback(async () => {
-    if (!websiteUrl.trim() || !brandName.trim()) return;
+    if (!websiteUrl.trim() || !productUrl.trim() || !brandName.trim()) return;
     setIsAnalyzing(true);
-    setShowResults(false);
     setError(null);
     setLoadingProgress(0);
     setLoadingMessage("Initializing analysis engine...");
@@ -56,6 +74,7 @@ export default function DashboardOverview() {
     try {
       const result = await analyzeBrandVisibility(
         websiteUrl.trim(),
+        productUrl.trim(),
         brandName.trim(),
         competitorList
       );
@@ -64,9 +83,15 @@ export default function DashboardOverview() {
       setLoadingMessage("Report generated.");
 
       setTimeout(() => {
-        setAnalysisResult(result);
+        setBrandData({
+          brandName: brandName.trim(),
+          websiteUrl: websiteUrl.trim(),
+          productUrl: productUrl.trim(),
+          competitors: competitors.trim(),
+          isFamous: result.isFamous || false,
+          analysisResult: result,
+        });
         setIsAnalyzing(false);
-        setShowResults(true);
       }, 300);
     } catch (err) {
       clearInterval(progressInterval);
@@ -74,17 +99,27 @@ export default function DashboardOverview() {
       console.error(err);
       setError(err instanceof Error ? err.message : "An error occurred during analysis.");
     }
-  }, [websiteUrl, brandName, competitors]);
+  }, [websiteUrl, productUrl, brandName, competitors, setBrandData]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      if (websiteUrl.trim() && productUrl.trim() && brandName.trim() && !isAnalyzing) {
+        handleAnalyze();
+      }
+    }
+  };
+
+  const showResults = isAnalyzed && globalAnalysisResult;
 
   return (
     <div className="space-y-8 font-sans">
       {/* Header Area */}
       {!isAnalyzing && !showResults && (
         <div className="space-y-1.5">
-          <h1 className="text-lg font-bold tracking-tight text-foreground uppercase">
+          <h1 className="text-xl font-extrabold tracking-tight text-foreground uppercase">
             AI Search Brand Intelligence
           </h1>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs font-semibold text-muted-foreground">
             Analyze brand presence, competitive positioning, and coverage gaps across conversational AI models.
           </p>
         </div>
@@ -102,26 +137,41 @@ export default function DashboardOverview() {
               <div className="space-y-3">
                 <div className="space-y-1">
                   <label htmlFor="dashboard-url" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                    Website URL
+                    Website URL *
                   </label>
                   <Input
                     id="dashboard-url"
                     placeholder="e.g. stripe.com"
                     value={websiteUrl}
                     onChange={(e) => setWebsiteUrl(e.target.value)}
-                    className="h-9 border-border bg-background text-xs"
+                    onKeyDown={handleKeyDown}
+                    className="h-9 border-border bg-background text-xs font-semibold text-foreground"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label htmlFor="dashboard-product-url" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                    Product URL *
+                  </label>
+                  <Input
+                    id="dashboard-product-url"
+                    placeholder="e.g. stripe.com/payments"
+                    value={productUrl}
+                    onChange={(e) => setProductUrl(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    className="h-9 border-border bg-background text-xs font-semibold text-foreground"
                   />
                 </div>
                 <div className="space-y-1">
                   <label htmlFor="dashboard-brand" className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                    Brand Name
+                    Product Name *
                   </label>
                   <Input
                     id="dashboard-brand"
-                    placeholder="e.g. Stripe"
+                    placeholder="e.g. Stripe Payments"
                     value={brandName}
                     onChange={(e) => setBrandName(e.target.value)}
-                    className="h-9 border-border bg-background text-xs"
+                    onKeyDown={handleKeyDown}
+                    className="h-9 border-border bg-background text-xs font-semibold text-foreground"
                   />
                 </div>
                 <div className="space-y-1">
@@ -133,18 +183,19 @@ export default function DashboardOverview() {
                     placeholder="e.g. Adyen, PayPal"
                     value={competitors}
                     onChange={(e) => setCompetitors(e.target.value)}
-                    className="h-9 border-border bg-background text-xs"
+                    onKeyDown={handleKeyDown}
+                    className="h-9 border-border bg-background text-xs font-semibold text-foreground"
                   />
                 </div>
               </div>
 
               <Button
                 onClick={handleAnalyze}
-                disabled={!websiteUrl.trim() || !brandName.trim()}
-                className="w-full h-9 rounded bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-border"
+                disabled={!websiteUrl.trim() || !productUrl.trim() || !brandName.trim() || isAnalyzing}
+                className="w-full h-9 rounded bg-primary text-primary-foreground text-xs font-bold hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-border"
               >
                 <Search className="mr-2 h-3.5 w-3.5" />
-                Analyze Brand
+                Analyze Product
               </Button>
             </CardContent>
           </Card>
@@ -162,10 +213,10 @@ export default function DashboardOverview() {
           >
             <div className="space-y-4">
               <div className="flex justify-between items-baseline">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-foreground">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-foreground">
                   Running brand audit
                 </span>
-                <span className="text-xs font-bold font-mono text-foreground">{loadingProgress}%</span>
+                <span className="text-xs font-extrabold font-mono text-foreground">{loadingProgress}%</span>
               </div>
               <div className="h-[2px] w-full bg-border overflow-hidden rounded">
                 <div
@@ -173,7 +224,7 @@ export default function DashboardOverview() {
                   style={{ width: `${loadingProgress}%` }}
                 />
               </div>
-              <p className="text-xs font-mono text-muted-foreground animate-pulse">
+              <p className="text-xs font-bold font-mono text-muted-foreground animate-pulse">
                 {loadingMessage}
               </p>
             </div>
@@ -189,11 +240,11 @@ export default function DashboardOverview() {
               <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <h3 className="text-xs font-bold uppercase tracking-wider">Analysis Failed</h3>
-                <p className="text-xs text-muted-foreground">{error}</p>
+                <p className="text-xs font-bold text-muted-foreground">{error}</p>
                 <Button
                   onClick={() => setError(null)}
                   variant="outline"
-                  className="h-7 px-3 text-[10px] font-semibold border-risk/35 text-risk bg-background/50 hover:bg-risk/10 mt-2"
+                  className="h-7 px-3 text-[10px] font-bold border-risk/35 text-risk bg-background/50 hover:bg-risk/10 mt-2"
                 >
                   Dismiss
                 </Button>
@@ -205,7 +256,7 @@ export default function DashboardOverview() {
 
       {/* Results View (Intelligence Report) */}
       <AnimatePresence>
-        {showResults && !isAnalyzing && analysisResult && (
+        {showResults && !isAnalyzing && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -215,31 +266,35 @@ export default function DashboardOverview() {
             <div className="flex items-center justify-between border-b border-border pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono font-bold uppercase border border-border px-1.5 py-0.5 rounded bg-card text-foreground">
+                  <span className="text-[9px] font-mono font-extrabold uppercase border border-border px-1.5 py-0.5 rounded bg-card text-foreground">
                     REPORT APPROVED
                   </span>
-                  <span className="text-xs text-muted-foreground font-mono">
-                    ID: {analysisResult.domainName.toUpperCase()}-SECTOR-ALPHA
+                  <span className="text-[10px] font-bold text-muted-foreground font-mono">
+                    ID: {globalAnalysisResult.domainName.toUpperCase()}-SECTOR-ALPHA
                   </span>
                 </div>
-                <h1 className="text-lg font-bold text-foreground">
-                  AI Intelligence Audit — {analysisResult.brandName}
+                <h1 className="text-xl font-extrabold text-foreground tracking-tight">
+                  AI Intelligence Audit — {globalAnalysisResult.brandName}
                 </h1>
               </div>
               <Button
                 onClick={() => {
-                  setShowResults(false);
-                  setAnalysisResult(null);
+                  clearBrandData();
+                  // Reset local input states
+                  setWebsiteUrl("");
+                  setProductUrl("");
+                  setBrandName("");
+                  setCompetitors("");
                 }}
                 variant="outline"
-                className="h-8 px-3 text-xs border-border bg-card text-foreground hover:bg-accent font-medium rounded"
+                className="h-8 px-3 text-xs border-border bg-card text-foreground hover:bg-accent font-bold rounded"
               >
                 <ArrowLeft className="mr-1.5 h-3.5 w-3.5" />
                 Analyze New Brand
               </Button>
             </div>
 
-            <IntelligenceReport result={analysisResult} />
+            <IntelligenceReport result={globalAnalysisResult} />
           </motion.div>
         )}
       </AnimatePresence>
