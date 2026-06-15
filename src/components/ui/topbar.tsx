@@ -11,24 +11,16 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
-// Map routes to breadcrumb labels
 const routeLabels: Record<string, string> = {
   "/dashboard": "Overview",
   "/dashboard/geo-score": "GEO Score",
   "/dashboard/citations": "AI Citations",
-  "/dashboard/prompt-lab": "Prompt Lab",
   "/dashboard/competitors": "Competitor Analysis",
   "/dashboard/audit": "Website Audit",
-  "/dashboard/copilot": "AI Copilot",
   "/dashboard/content-strategy": "Content Strategy",
   "/dashboard/roadmap": "GEO Roadmap",
-  "/dashboard/history": "History",
-  "/dashboard/analytics": "Visualizations",
-  "/dashboard/alerts": "Alerts",
-  "/dashboard/api-keys": "API Keys",
   "/dashboard/settings": "Settings",
   "/dashboard/scan": "Brand Scan",
-  "/dashboard/reports": "Reports",
 };
 
 interface TopbarProps {
