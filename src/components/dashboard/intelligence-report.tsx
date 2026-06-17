@@ -341,7 +341,7 @@ export default function IntelligenceReport({ result }: IntelligenceReportProps) 
                 <div className="p-3 bg-accent/20 border border-border/80 rounded shadow-sm">
                   <p className="font-extrabold text-[10px] text-foreground">2. Competitive Positioning</p>
                   <p className="text-muted-foreground text-[10px] font-semibold mt-1">
-                    Comparing competitor gaps is vital. Review missing structured data schema list in the "Website Audit" section.
+                    Comparing competitor gaps is vital. Review missing structured data schema list in the &quot;Website Audit&quot; section.
                   </p>
                 </div>
               </div>

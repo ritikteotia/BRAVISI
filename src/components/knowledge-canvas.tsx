@@ -22,6 +22,9 @@ interface Node3D {
   color: string;
   label?: string;
   isCore?: boolean;
+  rx: number;
+  ry: number;
+  rz: number;
 }
 
 export default function KnowledgeCanvas() {
@@ -90,6 +93,9 @@ export default function KnowledgeCanvas() {
         color: coreInfo ? coreInfo.color : "rgba(99, 102, 241, 0.4)",
         label: coreInfo?.label,
         isCore,
+        rx: 0,
+        ry: 0,
+        rz: 0,
       });
     }
 
@@ -120,7 +126,7 @@ export default function KnowledgeCanvas() {
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
 
-    let angleX = 0.002;
+    const angleX = 0.002;
     let angleY = 0.003;
     const fov = 350; // Camera perspective distance
 
@@ -173,28 +179,28 @@ export default function KnowledgeCanvas() {
 
         // Apply 3D Rotations
         // Rotate Y
-        let x1 = node.x * cosY - node.z * sinY;
-        let z1 = node.z * cosY + node.x * sinY;
+        const x1 = node.x * cosY - node.z * sinY;
+        const z1 = node.z * cosY + node.x * sinY;
 
         // Rotate X
-        let y2 = node.y * cosX - z1 * sinX;
-        let z2 = z1 * cosX + node.y * sinX;
+        const y2 = node.y * cosX - z1 * sinX;
+        const z2 = z1 * cosX + node.y * sinX;
 
         // Store rotated virtual coordinates
-        (node as any).rx = x1;
-        (node as any).ry = y2;
-        (node as any).rz = z2 + mouseX * 2; // Offset depth on mouse movement
+        node.rx = x1;
+        node.ry = y2;
+        node.rz = z2 + mouseX * 2; // Offset depth on mouse movement
       });
 
       // Sort nodes by depth (z-index) so back-to-front rendering looks correct
-      const sortedNodes = [...nodes].sort((a, b) => (b as any).rz - (a as any).rz);
+      const sortedNodes = [...nodes].sort((a, b) => b.rz - a.rz);
 
       // 2. Draw connections (lines)
       const linkDist = 110;
       ctx.lineWidth = 0.5;
 
       for (let i = 0; i < sortedNodes.length; i++) {
-        const n1 = sortedNodes[i] as any;
+        const n1 = sortedNodes[i];
         const scale1 = fov / (fov + n1.rz);
         const x1_proj = width / 2 + n1.rx * scale1 + mouseX;
         const y1_proj = height / 2 + n1.ry * scale1 + mouseY;
@@ -203,7 +209,7 @@ export default function KnowledgeCanvas() {
         if (n1.rz < -fov) continue;
 
         for (let j = i + 1; j < sortedNodes.length; j++) {
-          const n2 = sortedNodes[j] as any;
+          const n2 = sortedNodes[j];
           if (n2.rz < -fov) continue;
 
           // Compute 3D distance between nodes
@@ -233,7 +239,7 @@ export default function KnowledgeCanvas() {
       }
 
       // 3. Draw nodes & labels
-      sortedNodes.forEach((node: any) => {
+      sortedNodes.forEach((node) => {
         if (node.rz < -fov) return;
 
         const scale = fov / (fov + node.rz);

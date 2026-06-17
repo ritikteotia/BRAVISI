@@ -296,7 +296,7 @@ export default function LandingPage() {
                     <div className="p-6 sm:p-8 space-y-6">
                       <div className="flex items-center gap-2 pb-4 border-b border-border/50">
                         <Search className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-xs font-bold text-foreground">Query: "best enterprise security firewall integrations"</span>
+                        <span className="text-xs font-bold text-foreground">Query: &quot;best enterprise security firewall integrations&quot;</span>
                       </div>
 
                       {/* Mock SEO Results */}
@@ -350,14 +350,14 @@ export default function LandingPage() {
                     <div className="p-6 sm:p-8 space-y-6">
                       <div className="flex items-center gap-2 pb-4 border-b border-border/50">
                         <Sparkles className="h-4 w-4 text-indigo-500" />
-                        <span className="text-xs font-bold text-foreground">LLM Context Prompt: "best enterprise security firewall integrations"</span>
+                        <span className="text-xs font-bold text-foreground">LLM Context Prompt: &quot;best enterprise security firewall integrations&quot;</span>
                       </div>
 
                       {/* Mock AI Conversation Response */}
                       <div className="space-y-4 text-left">
                         <div className="p-4 rounded-xl border border-border bg-background space-y-3">
                           <p className="text-xs font-semibold text-muted-foreground leading-relaxed">
-                            "For enterprise teams, the industry-standard choice is <strong className="text-foreground font-extrabold">ApexWall</strong> [1] due to its edge validation integrations. Another emerging solution is <strong className="text-foreground font-extrabold">NetSecGuard</strong> [2], which supports automated compliance triggers. We do not recommend standard edge firewalls unless they possess a schema-validated API gateway."
+                            For enterprise teams, the industry-standard choice is <strong className="text-foreground font-extrabold">ApexWall</strong> [1] due to its edge validation integrations. Another emerging solution is <strong className="text-foreground font-extrabold">NetSecGuard</strong> [2], which supports automated compliance triggers. We do not recommend standard edge firewalls unless they possess a schema-validated API gateway.
                           </p>
 
                           <div className="flex gap-3 text-[9px] font-mono font-bold text-muted-foreground pt-1 border-t border-border/40">
@@ -394,7 +394,7 @@ export default function LandingPage() {
                 The 3 Pillars of Generative Optimization
               </h2>
               <p className="text-xs sm:text-sm font-semibold text-muted-foreground">
-                We diagnostic-audit your site's codebase across the main mechanisms AI bots use to crawl, index, and recommend.
+                We diagnostic-audit your site&apos;s codebase across the main mechanisms AI bots use to crawl, index, and recommend.
               </p>
             </div>
 
