@@ -303,3 +303,13 @@ npm start
 - [ ] Multi-tenant workspace teams.
 - [ ] Automated Slack & Email alerts whenever brand citation share drops below a threshold.
 - [ ] Public API endpoints for developer instrumentation.
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/ritikteotia/BRAVISI/issues) if you want to contribute.
+
+## 📝 License
+
+This project is [MIT](https://choosealicense.com/licenses/mit/) licensed.
